@@ -1,0 +1,28 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+.cm-s-default .cm-shortcode {
+    color: orange;
+}
+.CodeMirror {
+  
+  /*height: auto;*/
+  margin-top: 37px;
+
+}
+
+/*.CodeMirror-focused .cm-matchhighlight {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFklEQVQI12NgYGBgkKzc8x9CMDAwAAAmhwSbidEoSQAAAABJRU5ErkJggg==);
+  background-position: bottom;
+  background-repeat: repeat-x;
+}
+.cm-matchhighlight {
+  background-color: lightgreen
+}
+.CodeMirror-selection-highlight-scrollbar {
+  background-color: green
+}
+.CodeMirror-wrap pre {
+  word-break: break-word;
+}*/
