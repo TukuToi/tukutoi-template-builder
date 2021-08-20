@@ -296,6 +296,18 @@ var TKT_GLOBAL_NAMESPACE = {};
                 codemirror.replaceSelection('<div>' + an_alert + '</div>');
             }
         }
+
+        /**
+         * Instantiate Select2 on the Admin side 
+         * 
+         * Placeholder is currently only needed for Tempalte assignment.
+         * If we ever need it elswhere, we will operate with IDs instead of Class.
+         */
+        $( ".tkt_template_select" ).select2({
+            placeholder: 'Currently not used on any template...'
+        });
+
+
     })
 
 })( jQuery );

@@ -187,7 +187,7 @@ class Tkt_Template_Builder {
 
 		// Priority 11 because the plugin instantiates at init 10.
 		$this->loader->add_action( 'init', $plugin_admin, 'register_template', 11 );
-		$this->loader->add_action( 'wp_editor_settings', $plugin_admin, 'modify_editor', 10, 2 );
+		$this->loader->add_filter( 'wp_editor_settings', $plugin_admin, 'modify_editor', 10, 2 );
 		$this->loader->add_action( 'admin_head', $plugin_admin, 'add_metaboxes' );
 		$this->loader->add_action( 'save_post_tkt_tmplt_bldr_templ', $plugin_admin, 'save_metabox', 10, 2 );
 		$this->loader->add_action( 'admin_head', $plugin_admin, 'remove_metaboxes', PHP_INT_MAX );
