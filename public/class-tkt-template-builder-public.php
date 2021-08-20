@@ -95,12 +95,7 @@ class Tkt_Template_Builder_Public {
 	 */
 	public function include_template( $template ) {
 
-		$available_templates = array(
-			'404_template'      => 9122,
-			'singular_template' => 1000,
-			'single_template'   => 1000,
-			'content_template'  => 200,
-		);
+		$available_templates = array_map( 'sanitize_key', get_option( 'tkt_available_templates', array() ) );
 
 		if ( ( is_embed()
 			&& $template_id = $available_templates['embed_template'] ?? null
@@ -191,12 +186,7 @@ class Tkt_Template_Builder_Public {
 	 */
 	public function get_template_settings( $template_id ) {
 
-		// get the template settings here.
-		$template_settings = array(
-			'header' => 1230000,
-			'footer' => null,
-			'type'   => 'single', // archive, single, yada.
-		);
+		$template_settings = array_map( 'sanitize_key', get_post_meta( $this->template_id, '_tkt_template_settings', false )[0] );
 
 		return $template_settings;
 

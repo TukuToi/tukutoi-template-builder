@@ -76,7 +76,8 @@ class Tkt_Template_Builder_Admin {
 		// $hook_suffix is useless, it only tells this is a post (any) edit screen.
 		$screen = get_current_screen();
 		if ( isset( $screen->post_type ) && 'tkt_tmplt_bldr_templ' === $screen->post_type ) {
-			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/tkt-template-builder-admin.css', array( 'wp-codemirror' ), $this->version, 'all' );
+			wp_enqueue_style( 'select2', plugin_dir_url( __FILE__ ) . 'css/select2.css', array(), '4.1.0-rc.0', 'all' );
+			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/tkt-template-builder-admin.css', array( 'wp-codemirror', 'select2' ), $this->version, 'all' );
 		}
 
 	}
@@ -98,7 +99,8 @@ class Tkt_Template_Builder_Admin {
 		// $hook_suffix is useless, it only tells this is a post (any) edit screen.
 		$screen = get_current_screen();
 		if ( isset( $screen->post_type ) && 'tkt_tmplt_bldr_templ' === $screen->post_type ) {
-			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/tkt-template-builder-admin.js', array( 'csslint', 'htmlhint', 'jshint', 'wp-codemirror', 'quicktags' ), $this->version, true );
+			wp_enqueue_script( 'select2', plugin_dir_url( __FILE__ ) . 'js/select2.js', array( 'jquery' ), '4.1.0-rc.0', true );
+			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/tkt-template-builder-admin.js', array( 'csslint', 'htmlhint', 'jshint', 'wp-codemirror', 'quicktags', 'select2' ), $this->version, true );
 		}
 
 	}
@@ -132,7 +134,7 @@ class Tkt_Template_Builder_Admin {
 	 */
 	public function add_metaboxes() {
 
-		add_meta_box( 'tkt_template_settings', __( 'TukuToi Template Settings', 'tkt-template-builder' ), array( $this, 'template_settings_metabox' ), 'tkt_tmplt_bldr_templ', 'side', 'high', array() );
+		add_meta_box( 'tkt_template_settings', __( 'TukuToi Template Settings', 'tkt-template-builder' ), array( $this, 'template_settings_metabox' ), 'tkt_tmplt_bldr_templ', 'side', 'high', null );
 
 	}
 
@@ -144,29 +146,57 @@ class Tkt_Template_Builder_Admin {
 	 */
 	public function template_settings_metabox( $post, $metabox ) {
 
-		?>
-		<select>
-			<option>404_template</option>
-			<option>archive_template</option>
-			<option>attachment_template</option>
-			<option>author_template</option>
-			<option>category_template</option>
-			<option>date_template</option>
-			<option>embed_template</option>
-			<option>frontpage_template</option>
-			<option>home_template</option>
-			<option>index_template</option>
-			<option>page_template</option>
-			<option>paged_template</option>
-			<option>privacypolicy_template</option>
-			<option>search_template</option>
-			<option>single_template</option>
-			<option>singular_template</option>
-			<option>tag_template</option>
-			<option>taxonomy_template</option>
-		</select>
-		<?php
-		wp_nonce_field( 'save_tkt_template_settings', 'tkt_template_settings_nonce' );
+		// Existing Template Options (available templates and assignements).
+		$options = $this->get_options();
+
+		// Existing Template Settings.
+		$settings = $this->get_settings( $post->ID );
+
+		/**
+		 * Array of valid Templates.
+		 *
+		 * @todo move this to a Declarations/Comfig file.
+		 */
+		$templates = array(
+			'404_template'              => esc_html__( '404 Template', 'tkt-template-builder' ),
+			'archive_template'          => esc_html__( 'Archive Template', 'tkt-template-builder' ),
+			'attachment_template'       => esc_html__( 'Attachment Template', 'tkt-template-builder' ),
+			'author_template'           => esc_html__( 'Author Template', 'tkt-template-builder' ),
+			'category_template'         => esc_html__( 'Category Template', 'tkt-template-builder' ),
+			'date_template'             => esc_html__( 'Date Template', 'tkt-template-builder' ),
+			'embed_template'            => esc_html__( 'Embed Template', 'tkt-template-builder' ),
+			'frontpage_template'        => esc_html__( 'Front Page Template', 'tkt-template-builder' ),
+			'home_template'             => esc_html__( 'Home Template', 'tkt-template-builder' ),
+			'index_template'            => esc_html__( 'Index Template', 'tkt-template-builder' ),
+			'page_template'             => esc_html__( 'Page Template', 'tkt-template-builder' ),
+			'paged_template'            => esc_html__( 'Paged Template', 'tkt-template-builder' ),
+			'privacypolicy_template'    => esc_html__( 'Privacy Policy Template', 'tkt-template-builder' ),
+			'search_template'           => esc_html__( 'Search Template', 'tkt-template-builder' ),
+			'single_template'           => esc_html__( 'Single Template', 'tkt-template-builder' ),
+			'singular_template'         => esc_html__( 'Singular Template', 'tkt-template-builder' ),
+			'tag_template'              => esc_html__( 'Tags Template', 'tkt-template-builder' ),
+			'taxonomy_template'         => esc_html__( 'Taxonomy Template', 'tkt-template-builder' ),
+			'content_template'          => esc_html__( 'Content Template', 'tkt-template-builder' ),
+		);
+
+		/**
+		 * Array of valid Layouts.
+		 */
+		$args = array(
+			'post_status' => array( 'publish' ),
+			'post_type'   => array( 'tkt_tmplt_bldr_templ' ),
+		);
+		$layouts = get_posts( $args );
+
+		/**
+		 * Did you know that if you where to add a echo $var here, where $var is just whatever comes from the included file
+		 * WPCS would flag it as unsafe? So why would include() be safer? It is the exact same content. Even the exact same
+		 * operation. We echo things. And yet you can avoid the WPCS flag by simply not echoing, but including.
+		 * You could go a step further, and ob_get_clean the included content. Then echo. Same same... and yet WPCS would flag.
+		 * This is absurd.
+		 */
+		include( plugin_dir_path( __FILE__ ) . 'partials/tkt-template-builder-admin-display.php' );
+
 	}
 
 	/**
@@ -176,6 +206,7 @@ class Tkt_Template_Builder_Admin {
 	 * @param object $post The Current Post Object.
 	 */
 	public function save_metabox( $post_id, $post ) {
+
 		/**
 		 * Verify Nonce
 		 */
@@ -194,7 +225,63 @@ class Tkt_Template_Builder_Admin {
 		if ( wp_is_post_revision( $post_id ) ) {
 			return;
 		}
-		// Save here.
+
+		// No need to proceed if there is no post id for some reason.
+		if ( ! isset( $_POST['ID'] ) ) {
+			return;
+		}
+
+		// Sanitize POSTed ID.
+		$post_id = absint( wp_unslash( $_POST['ID'] ) );
+
+		// Setup variables.
+		$template_assigned_to = array();
+		$available_templates = array();
+		$header = '';
+		$footer = '';
+
+		if ( isset( $_POST['tkt_template_assigned_to'] ) ) {
+			$template_assigned_to = array_map( 'sanitize_key', $_POST['tkt_template_assigned_to'] );
+		}
+		if ( isset( $_POST['tkt_template_header'] ) ) {
+			$header = sanitize_key( $_POST['tkt_template_header'] );
+		}
+		if ( isset( $_POST['tkt_template_footer'] ) ) {
+			$footer = sanitize_key( $_POST['tkt_template_footer'] );
+		}
+
+		/**
+		 * Create the Option storing all available Template Types with the User-made Template.
+		 *
+		 * This allows later to quickly fetch the right template, by template type.
+		 * without having to query the posts table. Once we fetched the User-made Template ID.
+		 * We can then fetch the post by ID which is much more targeted than a rough "get posts where meta field is...".
+		 *
+		 * Note that technically, it would be better to listen to Slugs, instead of IDs.
+		 * This because on migration, the ID changes, the slug not.
+		 * However, machines are around 230 times faster fetching a number than a string in mySQL databases.
+		 * Thus, we use ID to map the Template, and use a custom solution on migration process.
+		 */
+		foreach ( $template_assigned_to as $key => $template_type ) {
+			$available_templates[ $template_type ] = absint( $post_id );
+		}
+
+		// Update the new option array.
+		update_option( 'tkt_available_templates', $available_templates, true );
+
+		/**
+		 * Build an array to store the single Template settings.
+		 *
+		 * This meta value is hidden, so users cannot mistakenly edit it in the admin area.
+		 *
+		 * Here we already know the Template ID, thus we can get it specifically out of the database.
+		 */
+		$template_settings = array(
+			'header' => $header,
+			'footer' => $footer,
+		);
+
+		update_post_meta( $post_id, '_tkt_template_settings', $template_settings );
 	}
 
 	/**
@@ -202,6 +289,8 @@ class Tkt_Template_Builder_Admin {
 	 *
 	 * We can remove Metaboxes only after they are added.
 	 * This hook runs at PHP_INT_MAX.
+	 *
+	 * @todo There is a BUG in ClassicPress see https://github.com/ClassicPress/ClassicPress/issues/777.
 	 */
 	public function remove_metaboxes() {
 
@@ -210,7 +299,6 @@ class Tkt_Template_Builder_Admin {
 		$allowed_metaboxes = array(
 			'postcustom',
 			'revisionsdiv',
-			'commentstatusdiv',
 			'commentsdiv',
 			'slugdiv',
 			'submitdiv',
@@ -230,7 +318,6 @@ class Tkt_Template_Builder_Admin {
 				}
 			}
 		}
-
 	}
 
 	/**
@@ -294,6 +381,24 @@ class Tkt_Template_Builder_Admin {
 
 		register_post_type( 'tkt_tmplt_bldr_templ', $args );
 
+	}
+
+	/**
+	 * Get the Options of available Templates
+	 */
+	private function get_options() {
+		$options = array_map( 'sanitize_key', get_option( 'tkt_available_templates', array() ) );
+		return $options;
+	}
+
+	/**
+	 * Get the Options of a specific Template
+	 *
+	 * @param int $layout_id The ID of the current edited Layout.
+	 */
+	private function get_settings( $layout_id ) {
+		$template_settings = array_map( 'sanitize_key', get_post_meta( $layout_id, '_tkt_template_settings' )[0] );
+		return $template_settings;
 	}
 
 }
