@@ -44,20 +44,38 @@
  * @see https://make.wordpress.org/core/handbook/testing/reporting-security-vulnerabilities/#why-are-some-users-allowed-to-post-unfiltered-html
  * @see {/wp-includes/post-template.php}
  * @see https://www.tollmanz.com/wp-kses-performance/
+ * @todo instead of the_content filter we probably should create a custom filter, which can be used instead of.
+ *       The problem with the_content filter is that if we pass it multiple times, and someone hooks to it, it will get
+ *       hooked many times. However correctly, the_content filter should be present only once on a post. We can not just
+ *       omit it though, since without it, ShortCodes will not expand and styles won't apply.
  */
 
-$template_id = apply_filters( 'tkt_template_id', 0 );
-$template_settings = apply_filters( 'tkt_template_settings', array() );
+/**
+ * Get Requested Template Options, ID and Settings.
+ */
+$tkt_options        = array_map( 'sanitize_key', get_option( 'tkt_available_templates', array() ) );
+$template_id        = absint( apply_filters( 'tkt_template_id', 0 ) );
+$template_settings  = array_map( 'sanitize_key', apply_filters( 'tkt_template_settings', array() ) );
 
+/**
+ * Check if a Global Header/Footer is available
+ */
+$global_header      = isset( $tkt_options['global_header'] ) && is_numeric( $tkt_options['global_header'] ) ? absint( $tkt_options['global_header'] ) : null;
+$global_footer      = isset( $tkt_options['global_footer'] ) && is_numeric( $tkt_options['global_footer'] ) ? absint( $tkt_options['global_footer'] ) : null;
+
+/**
+ * Get our main template parts content
+ */
+$main_template_object = get_post( $template_id );
+
+/**
+ * Start our Layout with a header.
+ */
 if ( isset( $template_settings['header'] )
-	&& ( 'theme_header' === $template_settings['header']
-		|| empty( $template_settings['header'] )
-	)
-	|| ! isset( $template_settings['header'] )
+	&& 'theme_header' === $template_settings['header']
 ) {
 	/**
-	 * Header setting is set, and is either set to theme_header or empty => load theme header.
-	 * Header setting is not set at all => load theme header.
+	 * Header setting is set specifically to theme header.
 	 */
 	get_header();
 } elseif ( isset( $template_settings['header'] ) && is_numeric( $template_settings['header'] ) ) {
@@ -65,47 +83,85 @@ if ( isset( $template_settings['header'] )
 	 * Header setting is set, and numeric => potentially a valid Custom Header is passed.
 	 * If no valid header found, fall back to theme header.
 	 */
-	if ( ! is_null( get_post( $template_settings['header'] ) ) ) {
+	$header_object = get_post( $template_settings['header'] );
+	if ( ! is_null( $header_object ) ) {
+		$header_content = apply_filters( 'tkt_post_process_shortcodes', apply_filters( 'the_content', $header_object->post_content ) );
 		// @codingStandardsIgnoreLine
-		echo apply_filters( 'the_content', get_post( $template_settings['header'] )->post_content );
+		echo $header_content;
 	} else {
 		get_header();
 	}
 } elseif ( isset( $template_settings['header'] ) && 'no_header' === $template_settings['header'] ) {
 	/**
-	 * User chose to explicitly use this template but no header (perhaps they added header directly to template).
+	 * User chose to explicitly use this template but no header (perhaps they added header directly to template?).
 	 */
 	echo null;
+} elseif ( ! is_null( $global_header ) ) {
+	/**
+	 * A global header is set, and no specific "local" header is set for this template.
+	 * Again check if we find a valid header first.
+	 */
+	$header_object = get_post( $tkt_options['global_header'] );
+	if ( ! is_null( $header_object ) ) {
+		$header_content = apply_filters( 'tkt_post_process_shortcodes', $header_object->post_content );
+		// @codingStandardsIgnoreLine
+		echo apply_filters( 'the_content', $header_content );
+	} else {
+		get_header();
+	}
+} else {
+	/**
+	 * No theme_header, no custom header, no no_header, no global header, or else error.
+	 * Fallback to Theme header.
+	 */
+	get_header();
 }
 
 /**
- * Output the Main Template
+ * Output the Main Part.
  *
  * We already know the ID is set, so it is a valid template indeed.
  * Let's just for sanity check if the post exists.
  * If by some chance it does not, we return an error message.
- *
- * NOTE: The WPCS alarm on line 96 is again false. We DO escape our translated and echoed content.
  */
-if ( ! is_null( $template_id ) && ! is_null( get_post( $template_id ) ) ) {
+if ( ! is_null( $main_template_object ) ) {
+
+	/**
+	 * An existing main Template part is requested
+	 */
+	if ( isset( $template_settings['parent'] )
+		&& ! empty( $template_settings['parent'] )
+		&& is_numeric( $template_settings['parent'] )
+	) {
+		/**
+		 * Parent setting is set, and numeric => potentially a valid Parent Template is passed.
+		 */
+		$parent_template_object = get_post( $template_settings['parent'] );
+		if ( ! is_null( $parent_template_object ) ) {
+			// @codingStandardsIgnoreLine
+			echo apply_filters( 'the_content', $parent_template_object->post_content );
+		}
+	}
+
+	$main_template = apply_filters( 'tkt_post_process_shortcodes', $main_template_object->post_content );
+	$main_template = apply_filters( 'the_content', $main_template );
 	// @codingStandardsIgnoreLine
-	echo apply_filters( 'the_content', get_post( $template_id )->post_content );
+	echo $main_template;
 
 } else {
-	$message = apply_filters( 'tkt_no_layout_message', 'You have assigned a Layout to this Template or Template Part which does not exist. Perhaps it was deleted? ' );
+	$no_template_message = apply_filters( 'tkt_no_template_message', 'You have assigned a Template which does not exist. Perhaps it was deleted? ' );
 	// Translators: 1: Error message. @codingStandardsIgnoreLine
-	printf( esc_html__( '%s', 'tkt-template-builder' ), $message );
+	printf( esc_html__( '%s', 'tkt-template-builder' ), $no_template_message );
 }
 
+/**
+ * Output the footer
+ */
 if ( isset( $template_settings['footer'] )
-	&& ( 'theme_footer' === $template_settings['footer']
-		|| empty( $template_settings['footer'] )
-	)
-	|| ! isset( $template_settings['footer'] )
+	&& 'theme_footer' === $template_settings['footer']
 ) {
 	/**
-	 * Footer setting is set, and is either set to theme_header or empty => load theme footer.
-	 * Footer setting is not set at all => load theme footer.
+	 * Theme Footer is requested.
 	 */
 	get_footer();
 } elseif ( isset( $template_settings['footer'] ) && is_numeric( $template_settings['footer'] ) ) {
@@ -113,9 +169,11 @@ if ( isset( $template_settings['footer'] )
 	 * Footer setting is set, and numeric => potentially a valid Custom Footer is passed.
 	 * If no valid footer found, fall back to theme footer.
 	 */
-	if ( ! is_null( get_post( $template_settings['footer'] ) ) ) {
+	$footer_object = get_post( $template_settings['footer'] );
+	if ( ! is_null( $footer_object ) ) {
+		$footer_content = apply_filters( 'the_content', $footer_object->post_content );
 		// @codingStandardsIgnoreLine
-		echo apply_filters( 'the_content', get_post( $template_settings['footer'] )->post_content );
+		echo $footer_content;
 	} else {
 		get_footer();
 	}
@@ -124,4 +182,23 @@ if ( isset( $template_settings['footer'] )
 	 * User chose to explicitly use this template but no footer (perhaps they added footer directly to template).
 	 */
 	echo null;
+} elseif ( ! is_null( $global_footer ) ) {
+	/**
+	 * A global footer is set, and no specific "local" footer is set for this template.
+	 * Again check if we find a valid footer first.
+	 */
+	$footer_object = get_post( $tkt_options['global_footer'] );
+	if ( ! is_null( $footer_object ) ) {
+		$footer_content = apply_filters( 'tkt_post_process_shortcodes', $footer_object->post_content );
+		// @codingStandardsIgnoreLine
+		echo apply_filters( 'the_content', $footer_content );
+	} else {
+		get_footer();
+	}
+} else {
+	/**
+	 * No theme_footer, no custom footer, no no_footer, no global footer, or else error.
+	 * Fallback to Theme footer.
+	 */
+	get_footer();
 }
