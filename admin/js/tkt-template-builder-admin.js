@@ -282,20 +282,20 @@ var TKT_GLOBAL_NAMESPACE = {};
         /**
          * An example of adding a Custom Quicktag
          */
-        QTags.addButton( 
-            'tkt_quicktag_id', 
-            'TKT QuickTag Label', 
-            tkt_quicktag_callback
-        );
+        // QTags.addButton( 
+        //     'tkt_quicktag_id', 
+        //     'TKT QuickTag Label', 
+        //     tkt_quicktag_callback
+        // );
  
-        function tkt_quicktag_callback() {
-            var an_alert = prompt( 'Enter a class name:', '' );
+        // function tkt_quicktag_callback() {
+        //     var an_alert = prompt( 'Enter a class name:', '' );
              
-            if ( an_alert ) {
-                var codemirror = TKT_GLOBAL_NAMESPACE.codemirror.getDoc();
-                codemirror.replaceSelection('<div>' + an_alert + '</div>');
-            }
-        }
+        //     if ( an_alert ) {
+        //         var codemirror = TKT_GLOBAL_NAMESPACE.codemirror.getDoc();
+        //         codemirror.replaceSelection('<div>' + an_alert + '</div>');
+        //     }
+        // }
 
         /**
          * Instantiate Select2 on the Admin side 
@@ -307,6 +307,27 @@ var TKT_GLOBAL_NAMESPACE = {};
             placeholder: 'Currently not used on any template...'
         });
 
+        /**
+         * Provide a "Copy ShortCode" button
+         */
+        $('#tkt_copy_template_shortcode').on('click', function(e){
+            e.preventDefault();
+            copy_shortcode();
+        })
+        function copy_shortcode() {
+            var shortcode = document.getElementById("tkt_template_shortcode");
+            var temp_textarea = document.createElement("textarea");
+            temp_textarea.value = shortcode.textContent;
+            document.body.appendChild(temp_textarea);
+            temp_textarea.select();
+            document.execCommand("copy");
+            temp_textarea.remove();
+            var icon = $('#tkt_copy_template_shortcode').html();
+            $('#tkt_copy_template_shortcode').html('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M13.485 1.431a1.473 1.473 0 0 1 2.104 2.062l-7.84 9.801a1.473 1.473 0 0 1-2.12.04L.431 8.138a1.473 1.473 0 0 1 2.084-2.083l4.111 4.112 6.82-8.69a.486.486 0 0 1 .04-.045z"/>')
+            setTimeout(function() { 
+                $('#tkt_copy_template_shortcode').html(icon);
+            }, 1600);
+        }
 
     })
 

@@ -3,6 +3,17 @@
 
 ## Changelog
 
+### 1.3.0
+* [Added] A totally nutters feature: do_action, function, and add_filters with ShortCodes. This helps building headers and footers, amongst other things.
+* [Added] `template`, `do_action` and `funktion` ShortCodes (see also above [Added])
+* [Added] Template Admin Columns for header, footer, parent and assigned templates
+* [Fixed] "Copy" ShortCode produced shortcodes without prefix
+* [Fixed] Merge ShortCode and Type Declarations instead of overwriting them
+
+### 1.2.0
+* [Added] Possibility to apply template to the content only (Content Template)
+* [Added] Possibility to apply Global Header and Global Footer
+
 ### 1.1.0
 * [Added] Backend Template Settings (Assigned Template, Header, Footer)
 * [Added] Select2 Settings instead of plain vanilla

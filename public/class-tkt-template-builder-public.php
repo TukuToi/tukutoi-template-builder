@@ -66,36 +66,83 @@ class Tkt_Template_Builder_Public {
 	}
 
 	/**
-	 * Register the stylesheets for the public-facing side of the site.
+	 * Apply Content Template.
 	 *
-	 * @since    0.0.1
+	 * Let's do some trickery with filters.
+	 * Preamble:
+	 * We add this filter apply_content_template to the content late, at priority 999.
+	 * This because we want to overwrite any possible template output of the_content with the user's custom template.
+	 *
+	 * However, to parse the_content properly (ShortCodes, style, etc) we have to re-apply the_content filter.
+	 * If we do that, we end in an infinite loop, because we add the apply_content_template filter to the_content,
+	 * which will hook apply_content_template, and then inside itself, applying the_content filter, which in turn re-adds
+	 * apply_content_template, which in turn reapplies the_content, and in turn re-adds apply_content_template.... you get it.
+	 *
+	 * Maximum level of nested reached will be the result. In other words, a timeout/fatal.
+	 *
+	 * To resolve this we:
+	 * - add_filter `apply_content_template` to `the_content` hook
+	 * - remove_filter `apply_content_template` filter from `the_content` while `apply_content_template` executes
+	 * - apply `the_content` filter on the Post Content inside `apply_content_template`
+	 * - add_filter `apply_content_template` back to `the_content` hook
+	 * - return the Post Content.
+	 *
+	 * @since    1.3.0
+	 * @param mixed $content The Post Content.
 	 */
-	public function enqueue_styles() {
+	public function apply_content_template( $content ) {
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/tkt-template-builder-public.css', array(), $this->version, 'all' );
+		// Return immediately if there is no reason to replace content.
+		if ( ! is_singular() ) {
+			return $content;
+		}
+
+		global $post;
+
+		// Get all available Content Templates.
+		$available_content_templates = $this->get_available_content_templates();
+
+		// No need to proceed if there is no Content Template for this type.
+		if ( ! is_array( $available_content_templates )
+			|| is_null( $post )
+			|| ! is_array( $post )
+			|| empty( $available_content_templates )
+			|| ! isset( $available_content_templates[ $post->post_type ] )
+		) {
+			return $content;
+		}
+
+		/**
+		 * Unhook our filter.
+		 */
+		remove_filter( 'the_content', array( $this, 'apply_content_template' ), 999 );
+
+		/**
+		 * $this->apply_content_template is now removed from the_content.
+		 * Get our Post Content, pass it thru the_content Filter, apply the content template
+		 */
+		$content_template_id = $available_content_templates[ $post->post_type ];
+		$content = apply_filters( 'the_content', get_post( $content_template_id )->post_content );
+
+		/**
+		 * Re-Hook our filter.
+		 */
+		add_filter( 'the_content', array( $this, 'apply_content_template' ), 999 );
+
+		// Happily return ever after.
+		return $content;
 
 	}
 
 	/**
-	 * Register the JavaScript for the public-facing side of the site.
-	 *
-	 * @since    0.0.1
-	 */
-	public function enqueue_scripts() {
-
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/tkt-template-builder-public.js', array( 'jquery' ), $this->version, true );
-
-	}
-
-	/**
-	 * Register the JavaScript for the public-facing side of the site.
+	 * Include Custom Template.
 	 *
 	 * @since    0.0.1
 	 * @param string $template The Template path loaded.
 	 */
 	public function include_template( $template ) {
 
-		$available_templates = array_map( 'sanitize_key', get_option( 'tkt_available_templates', array() ) );
+		$available_templates = $this->get_available_templates();
 
 		if ( ( is_embed()
 			&& $template_id = $available_templates['embed_template'] ?? null
@@ -148,9 +195,22 @@ class Tkt_Template_Builder_Public {
 		) {
 
 			$this->template_id = $template_id;
+			/**
+			 * We need to add some special items to wp_kses, because they might be needed in header and footer.
+			 * We cannot hook them only when header/footers are called, since a Template might include its header
+			 * thru a Template ShortCode, and thus get rendered at once, not separately as when assigned thru the GUI.
+			 *
+			 * Thus we add the extra tags to wp_kses, then the_content filters run with it applied, and right after the
+			 * content is done, we remove the tags again. We hook in on wp_kses_allowed_html, and hook out on the_content.
+			 */
+			add_filter( 'wp_kses_allowed_html', array( $this, 'add_special_tags_to_wp_kses' ), 10, 2 );
+			add_filter( 'the_content', array( $this, 'remove_special_tags_from_wp_kses' ), 11 );
+
+			/**
+			 * Allow later filters to get Template ID and Template Settings.
+			 */
 			add_filter( 'tkt_template_id', array( $this, 'get_template_id' ), 10, 1 );
 			add_filter( 'tkt_template_settings', array( $this, 'get_template_settings' ), 10, 1 );
-
 			$template = $this->load_template( $template_id );
 
 		}
@@ -193,6 +253,66 @@ class Tkt_Template_Builder_Public {
 	}
 
 	/**
+	 * This is a Filter callback.
+	 *
+	 * We have to add some special HTML Tags that are needed mostly when displaying headers.
+	 *
+	 * @param array  $allowed_html_tags Array of allowed tags in wp_kses.
+	 * @param string $context Context of wp_kses (default in this case).
+	 */
+	public function add_special_tags_to_wp_kses( $allowed_html_tags, $context ) {
+
+		$allowed_html_tags['meta'] = array(
+			'charset' => true,
+			'content' => true,
+			'http-equiv' => true,
+			'name' => true,
+		);
+		$allowed_html_tags['link'] = array(
+			'rel' => true,
+			'as' => true,
+			'href' => true,
+			'type' => true,
+			'crossorigin' => true,
+		);
+
+		return $allowed_html_tags;
+
+	}
+
+	/**
+	 * This is a Filter callback.
+	 *
+	 * We have to remove some special HTML Tags that where needed mostly when displaying headers.
+	 *
+	 * @param mixed $content The Content - do NOTHING with it here.
+	 */
+	public function remove_special_tags_from_wp_kses( $content ) {
+
+		add_filter( 'wp_kses_allowed_html', array( $this, 'unset_wp_kses_tags' ), 10, 2 );
+
+		return $content;
+
+	}
+
+	/**
+	 * This is a Filter callback.
+	 *
+	 * We have to remove some special HTML Tags that where needed mostly when displaying headers.
+	 *
+	 * @param array  $allowed_html_tags Array of allowed tags in wp_kses.
+	 * @param string $context Context of wp_kses (default in this case).
+	 */
+	public function unset_wp_kses_tags( $allowed_html_tags, $context ) {
+
+		unset( $allowed_html_tags['meta'] );
+		unset( $allowed_html_tags['link'] );
+
+		return $allowed_html_tags;
+
+	}
+
+	/**
 	 * Load the TukuToi Template.
 	 */
 	private function load_template() {
@@ -200,6 +320,28 @@ class Tkt_Template_Builder_Public {
 		$template_path = plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/tkt-template-builder-public-display.php';
 
 		return $template_path;
+
+	}
+
+	/**
+	 * Get Available Templates.
+	 */
+	private function get_available_templates() {
+
+		$available_templates = array_map( 'sanitize_key', (array) get_option( 'tkt_available_templates', array() ) );
+
+		return $available_templates;
+
+	}
+
+	/**
+	 * Get Available Templates.
+	 */
+	private function get_available_content_templates() {
+
+		$available_content_templates = array_map( 'sanitize_key', (array) get_option( 'tkt_available_content_templates', array() ) );
+
+		return $available_content_templates;
 
 	}
 

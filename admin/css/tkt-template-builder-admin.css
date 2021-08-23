@@ -6,15 +6,24 @@
     color: orange;
 }
 .CodeMirror {
-  
-  /*height: auto;*/
-  margin-top: 37px;
-
+    /*height: auto; use this for auto-resizing*/
+    margin-top: 37px;
 }
 .tkt_template_select{
-  width: 100%;
+    width: 100%;
 }
-/*.CodeMirror-focused .cm-matchhighlight {
+#tkt_template_shortcode{
+    margin:auto;
+}
+#tkt_copy_template_shortcode svg{
+    vertical-align: sub;
+}
+.tkt_template_shortcode_copy{
+    display:flex;
+}
+/*
+Use this for highlighting the current focused element throughout the content of the editor
+.CodeMirror-focused .cm-matchhighlight {
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFklEQVQI12NgYGBgkKzc8x9CMDAwAAAmhwSbidEoSQAAAABJRU5ErkJggg==);
   background-position: bottom;
   background-repeat: repeat-x;
@@ -25,6 +34,4 @@
 .CodeMirror-selection-highlight-scrollbar {
   background-color: green
 }
-.CodeMirror-wrap pre {
-  word-break: break-word;
-}*/
+*/
