@@ -94,6 +94,21 @@ class Tkt_Template_Builder_Declarations {
 				'type'  => 'templating',
 				'inner' => false,
 			),
+			'navmenu' => array(
+				'label' => esc_html__( 'Navigation Menu', 'tkt-search-and-filter' ),
+				'type'  => 'templating',
+				'inner' => false,
+			),
+			'widget' => array(
+				'label' => esc_html__( 'Widget', 'tkt-search-and-filter' ),
+				'type'  => 'templating',
+				'inner' => false,
+			),
+			'sidebar' => array(
+				'label' => esc_html__( 'Sidebar', 'tkt-search-and-filter' ),
+				'type'  => 'templating',
+				'inner' => false,
+			),
 			'do_action' => array(
 				'label' => esc_html__( 'Do Action', 'tkt-search-and-filter' ),
 				'type'  => 'hooks',
@@ -133,8 +148,8 @@ class Tkt_Template_Builder_Declarations {
 	public function data_map( $map ) {
 
 		$shortcode_types = array(
-			'templating' 	=> esc_html__( 'Templating', 'tkt-search-and-filter' ),
-			'hooks' 		=> esc_html__( 'Hooks & Functions', 'tkt-search-and-filter' ),
+			'templating'    => esc_html__( 'Templating', 'tkt-search-and-filter' ),
+			'hooks'         => esc_html__( 'Hooks & Functions', 'tkt-search-and-filter' ),
 		);
 
 		return $$map;

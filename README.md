@@ -3,6 +3,11 @@
 
 ## Changelog
 
+### 1.5.0
+* [Added] Navigation Menu ShortCode (With optional Bootstrap 4 Navwalker)
+* [Added] Sidebar ShortCode
+* [Added] Widget ShortCode
+
 ### 1.4.0
 * [Fixed] Select2 Placeholders are now specific
 * [Added] Filter to allow non-public, or delisted Post Types in the "Content Template" Selector. Use `tkt_tmplt_bldr_supported_post_types`, pass an array where $key => $post_type_object
