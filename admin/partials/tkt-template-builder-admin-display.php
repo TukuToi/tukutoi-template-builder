@@ -22,7 +22,7 @@ if ( $post->ID === $template_options['global_footer'] || $post->ID === $template
 ?>
 
 <h4>Template usage</h4>
-<select class="tkt_template_select" id="tkt_template_assigned_to" multiple="multiple" name="tkt_template_assigned_to[]">
+<select class="tkt_template_select_multi" id="tkt_template_assigned_to" multiple="multiple" name="tkt_template_assigned_to[]">
 	<?php
 	foreach ( $templates as $name => $label ) {
 		$selected = isset( $template_options[ $name ] ) && $template_options[ $name ] === $post->ID ? 'selected' : '';
@@ -31,7 +31,7 @@ if ( $post->ID === $template_options['global_footer'] || $post->ID === $template
 	?>
 </select>
 <br>
-<select class="tkt_template_select" id="tkt_content_template_assigned_to" multiple="multiple" name="tkt_content_template_assigned_to[]">
+<select class="tkt_template_select_multi" id="tkt_content_template_assigned_to" multiple="multiple" name="tkt_content_template_assigned_to[]">
 	<?php
 	foreach ( $post_types as $key => $object ) {
 		$selected = isset( $ct_options[ $object->name ] ) && $ct_options[ $object->name ] === $post->ID ? 'selected' : '';

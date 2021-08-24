@@ -303,8 +303,14 @@ var TKT_GLOBAL_NAMESPACE = {};
          * Placeholder is currently only needed for Tempalte assignment.
          * If we ever need it elswhere, we will operate with IDs instead of Class.
          */
+        $( "#tkt_template_assigned_to" ).select2({
+            placeholder: 'Use this template as...'
+        });
+        $( "#tkt_content_template_assigned_to" ).select2({
+            placeholder: 'Apply to the Post Body of...'
+        });
         $( ".tkt_template_select" ).select2({
-            placeholder: 'Currently not used on any template...'
+            
         });
 
         /**

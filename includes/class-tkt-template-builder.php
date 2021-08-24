@@ -179,7 +179,6 @@ class Tkt_Template_Builder {
 		 */
 
 		$this->loader->add_filter( 'tkt_scs_register_shortcode', $this->declarations, 'declare_shortcodes_add_filter' );
-
 	}
 
 	/**
@@ -243,6 +242,7 @@ class Tkt_Template_Builder {
 		$this->loader->add_filter( 'manage_tkt_tmplt_bldr_templ_posts_columns', $plugin_admin, 'add_template_admin_list_columns' );
 		$this->loader->add_action( 'manage_tkt_tmplt_bldr_templ_posts_custom_column', $plugin_admin, 'populate_template_admin_list_columns', 10, 2 );
 		$this->loader->add_filter( 'post_row_actions', $plugin_admin, 'remove_row_actions', 10, 1 );
+		$this->loader->add_action( 'load-post.php', $plugin_admin, 'help_tab_edit_template_screen' );
 
 		/**
 		 * Enqueue the backend scripts and styles.
@@ -354,12 +354,6 @@ class Tkt_Template_Builder {
 		$processor = new Tkt_Shortcodes_Processor( $this->plugin_prefix, $this->version, $this->declarations );
 		$this->loader->add_filter( 'the_content', $processor, 'pre_process_shortcodes', 5 );
 		$this->loader->add_filter( 'tkt_post_process_shortcodes', $processor, 'post_process_shortcodes' );
-
-		/**
-		 * Enqueue Scripts and Styles.
-		 */
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
 		/**
 		 * Template Router
