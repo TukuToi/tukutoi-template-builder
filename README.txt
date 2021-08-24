@@ -4,7 +4,7 @@ Donate link: https://www.tukutoi/
 Tags: templates, archives, design
 Requires at least: 4.9.0
 Tested up to: 4.9.99
-Stable tag: 1.3.0
+Stable tag: 1.5.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,6 +13,16 @@ TukuToi Template Builder allows you to create any kind of Template for your Word
 == Description ==
 
 == Changelog ==
+
+= 1.5.0 =
+* [Added] Navigation Menu ShortCode (With optional Bootstrap 4 Navwalker)
+* [Added] Sidebar ShortCode
+* [Added] Widget ShortCode
+
+= 1.4.0 =
+* [Fixed] Select2 Placeholders are now specific
+* [Added] Filter to allow non-public, or delisted Post Types in the "Content Template" Selector. Use `tkt_tmplt_bldr_supported_post_types`, pass an array where $key => $post_type_object
+* [Changed] Few GUI improvements
 
 = 1.3.0 =
 * [Added] A totally nutters feature: do_action, function, and add_filters with ShortCodes. This helps building headers and footers, amongst other things.

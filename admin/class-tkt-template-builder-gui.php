@@ -86,4 +86,140 @@ class Tkt_Template_Builder_Gui {
 
 	}
 
+	/**
+	 * Create a Select Field set for the ShortCodes Forms SiteInfo Display Options.
+	 *
+	 * @since 1.4.0
+	 */
+	public function allmenus_options() {
+
+		$menu_objects = wp_get_nav_menus();
+
+		foreach ( $menu_objects as $key => $object ) {
+			$label = $object->name;
+			$slug  = $object->slug;
+			$selected = '' === $object->slug ? 'selected' : '';
+			printf( '<option value="%s" ' . esc_attr( $selected ) . '>%s</option>', esc_attr( $slug ), esc_html( $label ) );
+		}
+
+		add_filter(
+			'tkt_scs_shortcodes_fieldset_explanation',
+			function( $explanation ) {
+				$explanation = __( 'What Menu to Show' );
+				return $explanation;
+			}
+		);
+
+	}
+
+	/**
+	 * Create a Select Field set for the ShortCodes Forms SiteInfo Display Options.
+	 *
+	 * @since 1.4.0
+	 */
+	public function alllocations_options() {
+
+		$locations = get_registered_nav_menus();
+
+		foreach ( $locations as $slug => $label ) {
+			$selected = '' === $slug ? 'selected' : '';
+			printf( '<option value="%s" ' . esc_attr( $selected ) . '>%s</option>', esc_attr( $slug ), esc_html( $label ) );
+		}
+
+		add_filter(
+			'tkt_scs_shortcodes_fieldset_explanation',
+			function( $explanation ) {
+				$explanation = __( 'What Menu Location to use (Wins over Menu setting above, if set)' );
+				return $explanation;
+			}
+		);
+
+	}
+
+	/**
+	 * Create a Select Field set for the ShortCodes Forms SiteInfo Display Options.
+	 *
+	 * @since 1.4.0
+	 */
+	public function allitemspacing_options() {
+
+		$spacings = array(
+			'preserve' => 'Preserve',
+			'discard'  => 'Discard',
+		);
+
+		foreach ( $spacings as $spacing => $label ) {
+
+			$selected = 'preserve' === $spacing ? 'selected' : '';
+			printf( '<option value="%s" ' . esc_attr( $selected ) . '>%s</option>', esc_attr( $spacing ), esc_html( $label ) );
+		}
+
+		add_filter(
+			'tkt_scs_shortcodes_fieldset_explanation',
+			function( $explanation ) {
+				$explanation = __( 'Whether to preserve whitespace within the menu\'s HTML.' );
+				return $explanation;
+			}
+		);
+
+	}
+
+	/**
+	 * Create a Select Field set for the ShortCodes Forms SiteInfo Display Options.
+	 *
+	 * @since 1.4.0
+	 */
+	public function allsidebars_options() {
+
+		global $wp_registered_sidebars;
+
+		if ( empty( $wp_registered_sidebars ) ) {
+			return;
+		}
+
+		foreach ( $wp_registered_sidebars as $key => $sidebar ) {
+
+			$selected = '' === $sidebar['id'] ? 'selected' : '';
+			printf( '<option value="%s" ' . esc_attr( $selected ) . '>%s</option>', esc_attr( $sidebar['id'] ), esc_html( $sidebar['name'] ) );
+		}
+
+		add_filter(
+			'tkt_scs_shortcodes_fieldset_explanation',
+			function( $explanation ) {
+				$explanation = __( 'What sidebar to include.' );
+				return $explanation;
+			}
+		);
+
+	}
+
+	/**
+	 * Create a Select Field set for the ShortCodes Forms SiteInfo Display Options.
+	 *
+	 * @since 1.4.0
+	 */
+	public function allwidgets_options() {
+
+		global $wp_widget_factory;
+
+		if ( empty( $wp_widget_factory ) ) {
+			return;
+		}
+
+		foreach ( $wp_widget_factory->widgets as $widget => $object ) {
+
+			$selected = '' === $widget ? 'selected' : '';
+			printf( '<option value="%s" ' . esc_attr( $selected ) . '>%s</option>', esc_attr( $widget ), esc_html( $object->widget_options['description'] ) );
+		}
+
+		add_filter(
+			'tkt_scs_shortcodes_fieldset_explanation',
+			function( $explanation ) {
+				$explanation = __( 'What widget to include.' );
+				return $explanation;
+			}
+		);
+
+	}
+
 }
