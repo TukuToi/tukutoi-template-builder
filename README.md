@@ -3,6 +3,12 @@
 
 ## Changelog
 
+### 1.4.0
+* [Fixed] Select2 Placeholders are now specific
+* [Added] Filter to allow non-public, or delisted Post Types in the "Content Template" Selector. Use `tkt_tmplt_bldr_supported_post_types`, pass an array where $key => $post_type_object
+* [Changed] Few GUI improvements
+
+
 ### 1.3.0
 * [Added] A totally nutters feature: do_action, function, and add_filters with ShortCodes. This helps building headers and footers, amongst other things.
 * [Added] `template`, `do_action` and `funktion` ShortCodes (see also above [Added])

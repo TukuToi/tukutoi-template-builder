@@ -9,7 +9,8 @@
     /*height: auto; use this for auto-resizing*/
     margin-top: 37px;
 }
-.tkt_template_select{
+.tkt_template_select,
+.tkt_template_select_multi{
     width: 100%;
 }
 #tkt_template_shortcode{
@@ -20,6 +21,10 @@
 }
 .tkt_template_shortcode_copy{
     display:flex;
+}
+select#tkt_content_template_assigned_to + span, 
+#tkt_template_settings details {
+    margin-top: 10px;
 }
 /*
 Use this for highlighting the current focused element throughout the content of the editor
