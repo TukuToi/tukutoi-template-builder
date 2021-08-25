@@ -159,23 +159,29 @@ class Tkt_Template_Builder_Public {
 			|| ( is_home()
 				&& $template_id = $available_templates['home_template'] ?? null
 			)
+			|| ( is_archive()
+				&& $template_id = $available_templates['archive_template'] ?? null
+			)
 			|| ( is_post_type_archive()
 				&& $template_id = $available_templates['post_type_archive_template'] ?? null
+			)
+			|| ( is_post_type_archive()
+				&& $template_id = $available_templates[ get_queried_object()->slug . '_archive_template' ] ?? null
 			)
 			|| ( is_tax()
 				&& $template_id = $available_templates['tax_template'] ?? null
 			)
+			|| ( is_tax()
+				&& $template_id = $available_templates[ get_queried_object()->taxonomy . '_tax_template' ] ?? null
+			)
 			|| ( is_attachment()
 				&& $template_id = $available_templates['attachment_template'] ?? null
 			)
-			|| ( is_single()
-				&& $template_id = $available_templates['single_template'] ?? null
-			)
-			|| ( is_page()
-				&& $template_id = $available_templates['page_template'] ?? null
-			)
-			|| ( is_singular()
+			|| ( is_singular()// is_single and is_page are both true in is_singular, after all.
 				&& $template_id = $available_templates['singular_template'] ?? null
+			)
+			|| ( is_singular()// is_single and is_page are both true in is_singular, after all.
+				&& $template_id = $available_templates[ get_post_type() . '_singular_template' ] ?? null
 			)
 			|| ( is_category()
 				&& $template_id = $available_templates['category_template'] ?? null
@@ -189,8 +195,14 @@ class Tkt_Template_Builder_Public {
 			|| ( is_date()
 				&& $template_id = $available_templates['date_template'] ?? null
 			)
-			|| ( is_archive()
-				&& $template_id = $available_templates['archive_template'] ?? null
+			|| ( is_year()
+				&& $template_id = $available_templates['year_template'] ?? null
+			)
+			|| ( is_month()
+				&& $template_id = $available_templates['month_template'] ?? null
+			)
+			|| ( is_day()
+				&& $template_id = $available_templates['day_template'] ?? null
 			)
 		) {
 

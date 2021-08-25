@@ -3,6 +3,13 @@
 
 ## Changelog
 
+### 1.6.0
+* [Added] Support for granular Post and Taxonomy Archives/Single templates where applicable
+* [Added] OptGroups to Template Selector for easier organization
+* [Added] Support for Date Archives (All, Year, Month, Day)
+* [Changed] Some general improvements to GUI and design
+* [Added] PHP Minimal Requirements: PHP 7.0.0
+
 ### 1.5.0
 * [Added] Navigation Menu ShortCode (With optional Bootstrap 4 Navwalker)
 * [Added] Sidebar ShortCode

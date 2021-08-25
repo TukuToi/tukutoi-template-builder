@@ -11,8 +11,7 @@
  * @link       https://www.tukutoi.com/
  * @since      1.0.0
  *
- * @package    Tkt_Shortcodes
- * @subpackage Tkt_Shortcodes/public
+ * @package    Tkt_Common
  */
 
 /**
@@ -28,8 +27,7 @@
  * This class attempts to fix that.
  *
  * @since      1.3.0
- * @package    Tkt_Shortcodes
- * @subpackage Tkt_Shortcodes/public
+ * @package    Tkt_Common
  * @author     Your Name <hello@tukutoi.com>
  */
 class Tkt_Shortcodes_Processor {

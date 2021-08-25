@@ -5,14 +5,10 @@
  * Orchestrates all commonly used functionality of all the TukuToi plugins.
  * Maintains Menu items, shared logic, scripts and more.
  *
- * [Toolset Views](https://toolset.com/) by [OTGS](https://onthegosystems.com/)
- * was used as a loose inspiration for some of the code in this class.
- *
  * @link       https://www.tukutoi.com/
  * @since      1.0.0
  *
- * @package    Tkt_Shortcodes
- * @subpackage Tkt_Shortcodes/public
+ * @package    Tkt_Common
  */
 
 /**
@@ -20,8 +16,7 @@
  *
  * Define Common Constants, menus, version and scripts.
  *
- * @package    Tkt_Shortcodes
- * @subpackage Tkt_Shortcodes/common
+ * @package    Tkt_Common
  * @author     TukuToi <hello@tukutoi.com>
  */
 class Tkt_Common {

@@ -22,21 +22,26 @@
 .tkt_template_shortcode_copy{
     display:flex;
 }
-select#tkt_content_template_assigned_to + span, 
-#tkt_template_settings details {
+.tkt_conditional_select2{
+    display: none;
+}
+fieldset.tkt-fieldset {
+    border-top: #2e7ba5 solid 1px;
+    border-bottom: #2e7ba5 solid 1px;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+}
+
+legend.tkt-legend {
+    color: #2e7ba5;
+    padding: 5px 10px;
+    border: 1px #2e7ba5 solid;
+    margin-left: 10px;
+}
+.tkt_fieldset_section{
     margin-top: 10px;
 }
-/*
-Use this for highlighting the current focused element throughout the content of the editor
-.CodeMirror-focused .cm-matchhighlight {
-  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFklEQVQI12NgYGBgkKzc8x9CMDAwAAAmhwSbidEoSQAAAABJRU5ErkJggg==);
-  background-position: bottom;
-  background-repeat: repeat-x;
-}
-.cm-matchhighlight {
-  background-color: lightgreen
-}
-.CodeMirror-selection-highlight-scrollbar {
-  background-color: green
-}
-*/
