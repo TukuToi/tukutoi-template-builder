@@ -300,18 +300,65 @@ var TKT_GLOBAL_NAMESPACE = {};
         /**
          * Instantiate Select2 on the Admin side 
          * 
-         * Placeholder is currently only needed for Tempalte assignment.
-         * If we ever need it elswhere, we will operate with IDs instead of Class.
+         * #tkt_template_assigned_to
+         * The "Template usage" > "use this template as..." Selector.
+         * Conditionally to its selected values we show #tkt_taxonomy_type or #tkt_post_type
+         * 
+         * To shw/hide a Select2 element conditionally, said element must be in a DIV with class "tkt_conditional_select2"
+         * It also needs class(es) matching the value of #tkt_template_assigned_to options which should show it.
+         * 
+         * #tkt_post_type
+         * The "Template usage" > "use for these post types..." Selector.
+         * Shows only if #tkt_template_assigned_to has "Single Posts/Pages/CPT" or "Post Type Archive" selected.
+         * Lets users choose what Single or Archive (Post) Type to target.
+         * 
+         * NOTE: We switched to use one Select for all templates, just keeping this code for reference.
          */
+        // Initiate the Multiple Select2 instances By ID with placeholder.
         $( "#tkt_template_assigned_to" ).select2({
-            placeholder: 'Use this template as...'
+            placeholder: 'Choose from Locations',
+            width: '100%',
         });
+        // $( "#tkt_post_type" ).select2({
+        //     placeholder: 'Choose from Post Types',
+        //     width: '100%',
+        // });
+        // $( "#tkt_taxonomy_type" ).select2({
+        //     placeholder: 'Choose from Custom Taxonomies',
+        //     width: '100%',
+        // });
         $( "#tkt_content_template_assigned_to" ).select2({
-            placeholder: 'Apply to the Post Body of...'
+            placeholder: 'Choose from Post Types',
+            width: '100%',
         });
+        // Initiate the Single Select2 instances by Class, no placeholder.
         $( ".tkt_template_select" ).select2({
-            
+            width: '100%',
         });
+        // // On Load check if the hidden Select2 should be shown.
+        // $.each( $('#tkt_template_assigned_to').find(':selected'), function( key, value ) {
+        //     $( '.' + $(value).val() ).show();
+        // });
+        // // On Selection, check what hidden Select2 to show.
+        // $('#tkt_template_assigned_to').on("select2:select", function(e) { 
+        //     $( '.tkt_conditional_select2' ).hide();
+        //     $.each( $(this).select2('data'), function( key, value ){
+        //         $( '.' + value.id ).show();
+        //     } );
+           
+        // });
+        // // On deselection, check what hidden Select2 to show or hide. Also clear all selections if select2 is hidden.
+        // $('#tkt_template_assigned_to').on("select2:unselect", function(e) { 
+        //     $( '.tkt_conditional_select2' ).hide();
+        //     $.each( $(this).select2('data'), function( key, value ){
+        //         $( '.' + value.id ).show();
+        //     } );   
+        //     if ( !$('.' + e.params.data.id).is(":visible") ){
+        //         $.each( $('.' + e.params.data.id + ' > select'), function( k, v ){
+        //             $('#' + $(v).attr('id') ).val(null).trigger('change');
+        //         });
+        //     }        
+        // });
 
         /**
          * Provide a "Copy ShortCode" button

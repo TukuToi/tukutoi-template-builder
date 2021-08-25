@@ -12,9 +12,14 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * Defines the plugin name, version, and two hooks to
- * enqueue the admin-facing stylesheet and JavaScript.
- * As you add hooks and methods, update this description.
+ * - enqueues all styles and scripts for admin area
+ * - alters TinyMCE
+ * - Add, Remove, Populate, Save metaboxes
+ * - Add Template CPT
+ * - Add Template CPT admin list columns
+ * - Remove row actions in admin list
+ * - Add Help Tabs
+ * - Add ShortCodes to TukuToi ShortCodes GUI
  *
  * @package    Tkt_Template_Builder
  * @subpackage Tkt_Template_Builder/admin
@@ -201,44 +206,7 @@ class Tkt_Template_Builder_Admin {
 		$settings = $this->get_settings( $post->ID );
 
 		/**
-		 * Array of valid Templates.
-		 *
-		 * Note: WP get_page_templates() doc comments state that this function can be used to
-		 * get all available Theme Templates, inclusive Header and Footer. That is however untrue.
-		 * NO Theme in the world will add a `Template Name: name of template` to its header or footer
-		 * because that would mean the users can then assign it to a page. Thus, the method can NOT be used
-		 * to get all theme templates, but only those the Theme explicitly declares as a template.
-		 * Not even Flagship Theme 2021 does have such a Template. Thus, we have to use a custom array and
-		 * cannot rely on the Theme's available templates.
-		 * This also means that we will NOT detect any Theme templates, but only support a hardcoded list thereof.
-		 *
-		 * @todo move this to a Declarations/Comfig file.
-		 */
-		$templates = array(
-			'404_template'              => esc_html__( '404 Template', 'tkt-template-builder' ),
-			'archive_template'          => esc_html__( 'Archive Template', 'tkt-template-builder' ),
-			'attachment_template'       => esc_html__( 'Attachment Template', 'tkt-template-builder' ),
-			'author_template'           => esc_html__( 'Author Template', 'tkt-template-builder' ),
-			'category_template'         => esc_html__( 'Category Template', 'tkt-template-builder' ),
-			'date_template'             => esc_html__( 'Date Template', 'tkt-template-builder' ),
-			'embed_template'            => esc_html__( 'Embed Template', 'tkt-template-builder' ),
-			'frontpage_template'        => esc_html__( 'Front Page Template', 'tkt-template-builder' ),
-			'home_template'             => esc_html__( 'Home Template', 'tkt-template-builder' ),
-			'index_template'            => esc_html__( 'Index Template', 'tkt-template-builder' ),
-			'page_template'             => esc_html__( 'Page Template', 'tkt-template-builder' ),
-			'paged_template'            => esc_html__( 'Paged Template', 'tkt-template-builder' ),
-			'privacypolicy_template'    => esc_html__( 'Privacy Policy Template', 'tkt-template-builder' ),
-			'search_template'           => esc_html__( 'Search Template', 'tkt-template-builder' ),
-			'single_template'           => esc_html__( 'Single Template', 'tkt-template-builder' ),
-			'singular_template'         => esc_html__( 'Singular Template', 'tkt-template-builder' ),
-			'tag_template'              => esc_html__( 'Tags Template', 'tkt-template-builder' ),
-			'taxonomy_template'         => esc_html__( 'Taxonomy Template', 'tkt-template-builder' ),
-			'global_header'             => esc_html__( 'Global Header', 'tkt-template-builder' ),
-			'global_footer'             => esc_html__( 'Global Footer', 'tkt-template-builder' ),
-		);
-
-		/**
-		 * Array of Post types where we can apply a Content Template.
+		 * Array of Post types where we can apply a Content Template or Single/Archive Template.
 		 * We try to remove all Post Types that we know shouldn't be used.
 		 *
 		 * We still allow users or plugins to manipulate the supported Post types,
@@ -257,7 +225,127 @@ class Tkt_Template_Builder_Admin {
 		$post_types = apply_filters( 'tkt_tmplt_bldr_supported_post_types', $post_types );
 
 		/**
-		 * Array of valid Templates.
+		 * Array of Taxonomies where we can apply an archive to.
+		 * We try to remove all Taxonomies that we know shouldn't be used, as well as Categories and Tags,
+		 * since those have separate Templates and Template Tags.
+		 *
+		 * We still allow users or plugins to manipulate the supported Taxonomies,
+		 * after all our operations. So if, then can.
+		 */
+		$taxonomies = get_taxonomies(
+			array(
+				'public' => true,
+				'_builtin' => false,
+			),
+			'objects'
+		);
+		$disallowed_taxonomies = array(); // Currently empty.
+		foreach ( $taxonomies as $key => $object ) {
+			if ( in_array( $object->name, $disallowed_taxonomies ) ) {
+				unset( $taxonomies[ $key ] );
+			}
+		}
+		$taxonomies = apply_filters( 'tkt_tmplt_bldr_supported_taxonomies', $taxonomies );
+
+		/**
+		 * Array of available Templates.
+		 *
+		 * Note: WP get_page_templates() doc comments state that this function can be used to
+		 * get all available Theme Templates, inclusive Header and Footer. That is however untrue.
+		 * NO Theme in the world will add a `Template Name: name of template` to its header or footer
+		 * because that would mean the users can then assign it to a page. Thus, the method can NOT be used
+		 * to get all theme templates, but only those the Theme explicitly declares as a template.
+		 * Not even Flagship Theme 2021 does have such a Template. Thus, we have to use a custom array and
+		 * cannot rely on the Theme's available templates.
+		 * This also means that we will NOT detect any Theme templates, but only support a hardcoded list thereof.
+		 *
+		 * We split the templates and merge them several times on purpose, so we can control the order
+		 * of the single items in the select2 instance.
+		 *
+		 * We inject OptGroups into the arrays to later use as optgroups for the Select2.
+		 * Perehaps not the cleanest way, but works, and thus ain't stupid.
+		 * OptGroups Open tags are keyed by n-increasing => Label.
+		 * OptGroups closing tags are keyed by optgroupend => ''.
+		 *
+		 * @todo move this to a Declarations/Comfig file.
+		 */
+		$templates = array(
+			0                               => esc_html__( 'Generic Templates', 'tkt-template-builder' ),
+			'index_template'                => esc_html__( 'Everything (Index)', 'tkt-template-builder' ),
+			'global_header'                 => esc_html__( 'Global Header', 'tkt-template-builder' ),
+			'global_footer'                 => esc_html__( 'Global Footer', 'tkt-template-builder' ),
+			'singular_template'             => esc_html__( 'All Single Pages, Posts & Custom Posts', 'tkt-template-builder' ),
+			'optgroupend'                   => '',
+			1                               => esc_html__( 'Particular Templates', 'tkt-template-builder' ),
+			'attachment_template'           => esc_html__( 'Attachments', 'tkt-template-builder' ),
+			'embed_template'                => esc_html__( 'Embeds', 'tkt-template-builder' ),
+			'frontpage_template'            => esc_html__( 'Front Page', 'tkt-template-builder' ),
+			'home_template'                 => esc_html__( 'Home Page', 'tkt-template-builder' ),
+			'privacypolicy_template'        => esc_html__( 'Privacy Policy Page', 'tkt-template-builder' ),
+			'404_template'                  => esc_html__( '404 Page', 'tkt-template-builder' ),
+		);
+
+		/**
+		 * Merge Post Types into $templates for single_ and archive_ templates
+		 */
+		foreach ( $post_types as $key => $object ) {
+			// Translators: s1 Is a Post Type Name.
+			$post_type_single_templates[ $object->name . '_singular_template' ] = sprintf( esc_html__( 'Single %s' ), $object->label );
+			// Exclude Pages and Posts from Archives.
+			if ( false === $object->_builtin ) {
+				// Translators: s1 Is a Post Type Name.
+				$post_type_archive_templates[ $object->name . '_archive_template' ] = sprintf( esc_html__( '%s (Post Archives)' ), $object->label );
+			}
+		}
+		$templates = array_merge( $templates, $post_type_single_templates );
+		$templates = array_merge(
+			$templates,
+			array(
+				'optgroupend'                   => '',
+				2                               => esc_html__( 'Archive Templates', 'tkt-template-builder' ),
+				'archive_template'              => esc_html__( 'All Archives (Post, Author, Taxonomy, etc)', 'tkt-template-builder' ),
+				'post_type_archive_template'    => esc_html__( 'All Custom Post Type Archives', 'tkt-template-builder' ),
+			),
+			$post_type_archive_templates,
+			array(
+				'category_template'             => esc_html__( 'Category Archives', 'tkt-template-builder' ),
+				'tag_template'                  => esc_html__( 'Tag Archives', 'tkt-template-builder' ),
+				'tax_template'                  => esc_html__( 'All Custom Taxonomy Archives', 'tkt-template-builder' ),
+			)
+		);
+
+		/**
+		 * Merge Taxonomies into $templates for archive_ templates
+		 */
+		foreach ( $taxonomies as $key => $object ) {
+			// Translators: s1 Is a Post Type Name.
+			$tax_archive_templates[ $object->name . '_tax_template' ] = sprintf( esc_html__( '%s (Taxonomy Archives)' ), $object->label );
+		}
+		$templates = array_merge( $templates, $tax_archive_templates );
+		$templates = array_merge(
+			$templates,
+			array(
+				'optgroupend' => '',
+			)
+		);
+
+		/**
+		 * Finally merge Date, Author and Search Templates
+		 */
+		$templates = array_merge(
+			$templates,
+			array(
+				'date_template'     => esc_html__( 'All Date Archives', 'tkt-template-builder' ),
+				'year_template'     => esc_html__( 'Year Archives', 'tkt-template-builder' ),
+				'month_template'     => esc_html__( 'Month Archives', 'tkt-template-builder' ),
+				'day_template'     => esc_html__( 'Day Archives', 'tkt-template-builder' ),
+				'author_template'   => esc_html__( 'Author Archives', 'tkt-template-builder' ),
+				'search_template'   => esc_html__( 'Search Results', 'tkt-template-builder' ),
+			),
+		);
+
+		/**
+		 * Array of valid Templates to use as Parent Templates or other (Header, Footer) Templates.
 		 *
 		 * Make sure to exclude current Template from the lists.
 		 * Users sometimes have worms and try to assign things to themselves.

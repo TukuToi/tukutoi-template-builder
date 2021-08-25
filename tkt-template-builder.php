@@ -15,10 +15,11 @@
  * Plugin Name:       TukuToi Template Builder
  * Plugin URI:        https://plugin.com/tkt-template-builder-uri/
  * Description:       TukuToi Template Builder allows you to create any kind of Template for your WordPress or ClassicPress website, directly from within the Admin area, without editing PHP Files.
- * Version:           1.5.0
+ * Version:           1.6.0
  * Author:            bedas
- * Requires at least: 4.9.0
- * Tested up to:      5.8
+ * Requires at least: 1.0.0
+ * Tested up to:      4.9.99
+ * Requires PHP:      7.0.0
  * Author URI:        https://www.tukutoi//
  * License:           GPL-2.0+
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.txt
@@ -36,7 +37,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 0.0.1 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'TKT_TEMPLATE_BUILDER_VERSION', '1.5.0' );
+define( 'TKT_TEMPLATE_BUILDER_VERSION', '1.6.0' );
 
 /**
  * The code that runs during plugin activation.
