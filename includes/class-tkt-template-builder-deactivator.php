@@ -38,7 +38,7 @@ class Tkt_Template_Builder_Deactivator {
 	 * @access   private
 	 * @var      string    $plugin    The $_REQUEST['plugin'] value during plugin activation.
 	 */
-	private static $plugin = TKT_TEMPLATE_BUILDER_BASE_NAME;
+	private static $plugin = 'tkt-template-builder/tkt-template-builder.php';
 
 	/**
 	 * The $_REQUEST['action'] during plugin activation.

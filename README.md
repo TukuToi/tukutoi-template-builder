@@ -3,6 +3,11 @@
 
 ## Changelog
 
+### 1.8.0
+* Fix several pontentially undefined $variables
+* Check if array offsets are defined
+* Revert basename Constant
+
 ### 1.7.0
 * [Fixed] global $post was mistakenly compared to an array
 * [Added] Global instead of hardcoded version and basename
