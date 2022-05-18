@@ -3,6 +3,10 @@
 
 ## Changelog
 
+### 1.7.0
+* [Fixed] global $post was mistakenly compared to an array
+* [Added] Global instead of hardcoded version and basename
+
 ### 1.6.0
 * [Added] Support for granular Post and Taxonomy Archives/Single templates where applicable
 * [Added] OptGroups to Template Selector for easier organization

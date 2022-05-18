@@ -105,7 +105,7 @@ class Tkt_Template_Builder_Public {
 		// No need to proceed if there is no Content Template for this type.
 		if ( ! is_array( $available_content_templates )
 			|| is_null( $post )
-			|| ! is_array( $post )
+			|| ! is_object( $post )
 			|| empty( $available_content_templates )
 			|| ! isset( $available_content_templates[ $post->post_type ] )
 		) {
