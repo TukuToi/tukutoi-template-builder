@@ -17,7 +17,13 @@
 $disabled = '';
 $i = 0;
 
-if ( $post->ID === $template_options['global_footer'] || $post->ID === $template_options['global_header'] ) {
+if ( ( isset( $template_options['global_footer'] )
+		&& $post->ID === $template_options['global_footer']
+	) || (
+		isset( $template_options['global_header'] )
+		&& $post->ID === $template_options['global_header']
+		)
+	) {
 	$disabled = 'disabled';
 }
 ?>
@@ -74,10 +80,12 @@ if ( $post->ID === $template_options['global_footer'] || $post->ID === $template
 			// If Theme header is set for this template.
 			$theme_header = isset( $settings['header'] ) && 'theme_header' === $settings['header'] ? 'selected' : '';
 			// If No Header is set for this template.
-			$no_header  = isset( $settings['header'] ) && 'no_header' === $settings['header'] || $template_options['global_header'] === $post->ID || $template_options['global_footer'] === $post->ID ? 'selected' : '';
+			$no_header  = ( isset( $settings['header'] ) && 'no_header' === $settings['header'] ) || ( isset( $template_options['global_header'] ) && $template_options['global_header'] === $post->ID ) || ( isset( $template_options['global_footer'] ) && $template_options['global_footer'] === $post->ID ) ? 'selected' : '';
 			// If Global Header or no header setting at all is set.
 			$global_header  = isset( $template_options['global_header'] ) && $template_options['global_header'] === $settings['header'] && $template_options['global_header'] !== $post->ID || ( isset( $template_options['global_header'] ) && empty( $theme_header ) && empty( $no_header ) ) ? 'selected' : '';
 			// Print the options.
+			// Revise this.
+			$global_head = isset( $template_options['global_header'] ) ? $template_options['global_header'] : '';
 			printf( '<option value="theme_header" ' . esc_attr( $theme_header ) . '>%s</option>', esc_html__( 'Theme Header', 'tkt-template-builder' ) );
 			printf( '<option value="no_header" ' . esc_attr( $no_header ) . '>%s</option>', esc_html__( 'No Header', 'tkt-template-builder' ) );
 			printf( '<option value="%s" ' . esc_attr( $global_header ) . '>%s</option>', esc_attr( $template_options['global_header'] ), esc_html__( 'Global Header', 'tkt-template-builder' ) );
@@ -89,11 +97,13 @@ if ( $post->ID === $template_options['global_footer'] || $post->ID === $template
 		<select class="tkt_template_select" name="tkt_template_footer" id="tkt_template_footer" <?php echo esc_attr( $disabled ); ?>>
 			<?php
 			$theme_footer = isset( $settings['footer'] ) && 'theme_footer' === $settings['footer'] ? 'selected' : '';
-			$no_footer  = isset( $settings['footer'] ) && 'no_footer' === $settings['footer'] || $template_options['global_header'] === $post->ID || $template_options['global_footer'] === $post->ID ? 'selected' : '';
-			$global_footer  = isset( $template_options['global_footer'] ) && $template_options['global_footer'] === $settings['footer'] && $template_options['global_header'] !== $post->ID || ( isset( $template_options['global_footer'] ) && empty( $theme_footer ) && empty( $no_footer ) ) ? 'selected' : '';
+			$no_footer  = ( isset( $settings['footer'] ) && 'no_footer' === $settings['footer'] ) || ( isset( $template_options['global_header'] ) && $template_options['global_header'] === $post->ID ) || ( isset( $template_options['global_footer'] ) && $template_options['global_footer'] === $post->ID ) ? 'selected' : '';
+			$global_footer  = ( isset( $template_options['global_footer'] ) && $template_options['global_footer'] === $settings['footer'] ) && ( isset( $template_options['global_header'] ) && $template_options['global_header'] !== $post->ID ) || ( isset( $template_options['global_footer'] ) && empty( $theme_footer ) && empty( $no_footer ) ) ? 'selected' : '';
+			// revise this.
+			$global_foot = isset( $template_options['global_footer'] ) ? $template_options['global_footer'] : '';
 			printf( '<option value="theme_footer" ' . esc_attr( $theme_footer ) . '>%s</option>', esc_html__( 'Theme Footer', 'tkt-template-builder' ) );
 			printf( '<option value="no_footer" ' . esc_attr( $no_footer ) . '>%s</option>', esc_html__( 'No Footer', 'tkt-template-builder' ) );
-			printf( '<option value="%s" ' . esc_attr( $global_footer ) . '>%s</option>', esc_attr( $template_options['global_footer'] ), esc_html__( 'Global Footer', 'tkt-template-builder' ) );
+			printf( '<option value="%s" ' . esc_attr( $global_footer ) . '>%s</option>', esc_attr( $global_foot ), esc_html__( 'Global Footer', 'tkt-template-builder' ) );
 			?>
 		</select>
 	<?php

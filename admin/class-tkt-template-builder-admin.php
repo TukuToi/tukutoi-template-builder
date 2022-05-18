@@ -213,6 +213,17 @@ class Tkt_Template_Builder_Admin {
 		 * after all our operations. So if, then can.
 		 */
 		$post_types = get_post_types( array( 'public' => true ), 'objects' );
+
+		/**
+		 * Archives of Post Types where we can apply a Template
+		 */
+		$post_type_archive_templates = array();
+
+		/**
+		 * Archives of Taxonomies where we can apply a Template
+		 */
+		$tax_archive_templates = array();
+
 		$disallowed_post_types = array(
 			'tkt_tmplt_bldr_templ',
 			'attachment',
