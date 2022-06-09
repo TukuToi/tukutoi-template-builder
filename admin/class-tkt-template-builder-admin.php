@@ -432,6 +432,7 @@ class Tkt_Template_Builder_Admin {
 		$template_assigned_to = array();
 		$content_template_assigned_to = array();
 		$available_templates = array();
+		$available_content_templates = array();
 		$header = '';
 		$footer = '';
 		$parent = '';
@@ -493,6 +494,21 @@ class Tkt_Template_Builder_Admin {
 		$new_template_options = array_merge( $old_template_options, $available_templates );
 		$thiz_old_template_options = array_intersect( $old_template_options, $available_templates );
 		$unset_theze_templates = array_diff_key( $thiz_old_template_options, $available_templates );
+
+		/**
+		 * If we remove all assignements from the template (select2) then we have no unset_theze_tempaltes
+		 * In this case, we set the single template assignement to remove
+		 * the one in new_template_options with ID === current edited template.
+		 */
+		if ( ! isset( $_POST['tkt_template_assigned_to'] ) && isset( $_POST['post_ID'] ) ) {
+			$unset_theze_templates = array(
+				array_search( (int) $_POST['post_ID'], $new_template_options ) => (int) $_POST['post_ID'],
+			);
+		}
+
+		/**
+		 * Now unset all templates removed
+		 */
 		foreach ( $unset_theze_templates as $template => $template_id ) {
 			unset( $new_template_options[ $template ] );
 		}
@@ -502,6 +518,21 @@ class Tkt_Template_Builder_Admin {
 		$new_ct_options = array_merge( $old_ct_options, $available_content_templates );
 		$thiz_old_ct_options = array_intersect( $old_ct_options, $available_content_templates );
 		$unset_theze_cts = array_diff_key( $thiz_old_ct_options, $available_content_templates );
+
+		/**
+		 * If we remove all assignements from the CT (select2) then we have no unset_theze_cts
+		 * In this case, we set the single CT assignement to remove
+		 * the one in new_ct_options with ID === current edited template.
+		 */
+		if ( ! isset( $_POST['tkt_content_template_assigned_to'] ) && isset( $_POST['post_ID'] ) ) {
+			$unset_theze_cts = array(
+				array_search( (int) $_POST['post_ID'], $new_ct_options ) => (int) $_POST['post_ID'],
+			);
+		}
+
+		/**
+		 * Now unset all CT removed
+		 */
 		foreach ( $unset_theze_cts as $ct => $ct_id ) {
 			unset( $new_ct_options[ $ct ] );
 		}
@@ -799,7 +830,16 @@ class Tkt_Template_Builder_Admin {
 	 * @param int $template_id The ID of the current edited Template.
 	 */
 	private function get_settings( $template_id ) {
-		$template_settings = array_map( 'sanitize_key', get_post_meta( $template_id, '_tkt_template_settings' )[0] );
+
+		/**
+		 * If no templates yet saved, this is empty.
+		 */
+		$template_settings = get_post_meta( $template_id, '_tkt_template_settings' );
+		if ( count( $template_settings ) > 0 ) {
+			$template_settings = $template_settings[0];
+		}
+		$template_settings = array_map( 'sanitize_key', $template_settings );
+
 		return $template_settings;
 	}
 
