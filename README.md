@@ -3,6 +3,9 @@
 
 ## Changelog
 
+### 1.8.3
+* [Fixed] bootstrap navbar shortcode unused argument
+
 ### 1.8.2
 * [Fixed] several undefined array offsets
 * [Fixed] ability to delete last assignement in templates select2
