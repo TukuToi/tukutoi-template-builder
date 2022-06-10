@@ -5,7 +5,7 @@ Tags: templates, archives, design
 Requires at least: 4.9.0
 Requires PHP: 7.0.0
 Tested up to: 4.9.99
-Stable tag: 1.8.0
+Stable tag: 1.8.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,10 +15,17 @@ TukuToi Template Builder allows you to create any kind of Template for your Word
 
 == Changelog ==
 
+= 1.8.3 =
+* [Fixed] bootstrap navbar shortcode unused argument
+
+= 1.8.2 =
+* [Fixed] several undefined array offsets
+* [Fixed] ability to delete last assignement in templates select2
+
 = 1.8.0 =
-* Fix several pontentially undefined $variables
-* Check if array offsets are defined
-* Revert basename Constant
+* [Fixed] several pontentially undefined $variables
+* [Fixed] array offsets undefined
+* [Fixed] revert basename Constant
 
 = 1.7.0 =
 * [Fixed] global $post was mistakenly compared to an array

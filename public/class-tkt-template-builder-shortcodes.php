@@ -382,7 +382,6 @@ class Tkt_Template_Builder_Shortcodes {
 				'depth'                => 0,
 				'walker'               => '',
 				'theme_location'       => '',
-				'items_wrap'           => '<ul id="%1$s" class="%2$s">%3$s</ul>',
 				'item_spacing'         => 'preserve',
 			),
 			$atts,
@@ -459,7 +458,7 @@ class Tkt_Template_Builder_Shortcodes {
 		$atts = shortcode_atts(
 			array(
 				'widget'        => '',
-				'classname'		=> '',
+				'classname'     => '',
 				'before_widget' => '<div class="widget %s">',
 				'after_widget'  => '</div>',
 				'before_title'  => '<h2 class="widgettitle">',
@@ -508,8 +507,8 @@ class Tkt_Template_Builder_Shortcodes {
 		);
 
 		$instance = array(
-			'title' 	=> $atts['title'],
-			'classname'	=> $atts['classname'],
+			'title'     => $atts['title'],
+			'classname' => $atts['classname'],
 		);
 
 		switch ( $atts['widget'] ) {
@@ -641,8 +640,8 @@ class Tkt_Template_Builder_Shortcodes {
 
 		$atts = shortcode_atts(
 			array(
-				'sidebar'  	=> '',
-				'error' 	=> 'Sidebar was not found',
+				'sidebar'   => '',
+				'error'     => 'Sidebar was not found',
 			),
 			$atts,
 			$tag

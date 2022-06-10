@@ -3,10 +3,17 @@
 
 ## Changelog
 
+### 1.8.3
+* [Fixed] bootstrap navbar shortcode unused argument
+
+### 1.8.2
+* [Fixed] several undefined array offsets
+* [Fixed] ability to delete last assignement in templates select2
+
 ### 1.8.0
-* Fix several pontentially undefined $variables
-* Check if array offsets are defined
-* Revert basename Constant
+* [Fixed] several pontentially undefined $variables
+* [Fixed] array offsets  undefined
+* [Fixed] revert basename Constant
 
 ### 1.7.0
 * [Fixed] global $post was mistakenly compared to an array
