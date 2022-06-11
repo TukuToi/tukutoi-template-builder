@@ -301,11 +301,11 @@ class Tkt_Template_Builder_Admin {
 		 */
 		foreach ( $post_types as $key => $object ) {
 			// Translators: s1 Is a Post Type Name.
-			$post_type_single_templates[ $object->name . '_singular_template' ] = sprintf( esc_html__( 'Single %s' ), $object->label );
+			$post_type_single_templates[ $object->name . '_singular_template' ] = sprintf( esc_html__( 'Single %s', 'tkt-template-builder' ), $object->label );
 			// Exclude Pages and Posts from Archives.
 			if ( false === $object->_builtin ) {
 				// Translators: s1 Is a Post Type Name.
-				$post_type_archive_templates[ $object->name . '_archive_template' ] = sprintf( esc_html__( '%s (Post Archives)' ), $object->label );
+				$post_type_archive_templates[ $object->name . '_archive_template' ] = sprintf( esc_html__( '%s (Post Archives)', 'tkt-template-builder' ), $object->label );
 			}
 		}
 		$templates = array_merge( $templates, $post_type_single_templates );
@@ -330,7 +330,7 @@ class Tkt_Template_Builder_Admin {
 		 */
 		foreach ( $taxonomies as $key => $object ) {
 			// Translators: s1 Is a Post Type Name.
-			$tax_archive_templates[ $object->name . '_tax_template' ] = sprintf( esc_html__( '%s (Taxonomy Archives)' ), $object->label );
+			$tax_archive_templates[ $object->name . '_tax_template' ] = sprintf( esc_html__( '%s (Taxonomy Archives)', 'tkt-template-builder' ), $object->label );
 		}
 		$templates = array_merge( $templates, $tax_archive_templates );
 		$templates = array_merge(
@@ -672,8 +672,8 @@ class Tkt_Template_Builder_Admin {
 
 		$columns = array(
 			'cb'                => $columns['cb'],
-			'title'             => __( 'Title' ),
-			'assigned_to'       => __( 'Assigned To' ),
+			'title'             => __( 'Title', 'tkt-template-builder' ),
+			'assigned_to'       => __( 'Assigned To', 'tkt-template-builder' ),
 			'parent_template'   => __( 'Parent Template', 'tkt-template-builder' ),
 			'header'            => __( 'Header', 'tkt-template-builder' ),
 			'footer'            => __( 'Footer', 'tkt-template-builder' ),

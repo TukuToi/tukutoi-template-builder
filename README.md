@@ -3,6 +3,9 @@
 
 ## Changelog
 
+### 1.8.6
+[Fixed] Missing Text Domains and some Comments for CPCS Review.
+
 ### 1.8.5
 [Fixed] Template ShortCode not parsing nested ShortCodes
 [Fixed] funktion ShortCode wrongly passing arguments with '' apostrophes

@@ -90,37 +90,37 @@ class Tkt_Template_Builder_Declarations {
 
 		$shortcodes = array(
 			'template' => array(
-				'label' => esc_html__( 'Template', 'tkt-search-and-filter' ),
+				'label' => esc_html__( 'Template', 'tkt-template-builder' ),
 				'type'  => 'templating',
 				'inner' => false,
 			),
 			'navmenu' => array(
-				'label' => esc_html__( 'Navigation Menu', 'tkt-search-and-filter' ),
+				'label' => esc_html__( 'Navigation Menu', 'tkt-template-builder' ),
 				'type'  => 'templating',
 				'inner' => false,
 			),
 			'widget' => array(
-				'label' => esc_html__( 'Widget', 'tkt-search-and-filter' ),
+				'label' => esc_html__( 'Widget', 'tkt-template-builder' ),
 				'type'  => 'templating',
 				'inner' => false,
 			),
 			'sidebar' => array(
-				'label' => esc_html__( 'Sidebar', 'tkt-search-and-filter' ),
+				'label' => esc_html__( 'Sidebar', 'tkt-template-builder' ),
 				'type'  => 'templating',
 				'inner' => false,
 			),
 			'do_action' => array(
-				'label' => esc_html__( 'Do Action', 'tkt-search-and-filter' ),
+				'label' => esc_html__( 'Do Action', 'tkt-template-builder' ),
 				'type'  => 'hooks',
 				'inner' => true,
 			),
 			'add_filter' => array(
-				'label' => esc_html__( 'Add Filter', 'tkt-search-and-filter' ),
+				'label' => esc_html__( 'Add Filter', 'tkt-template-builder' ),
 				'type'  => 'hooks',
 				'inner' => true,
 			),
 			'funktion' => array(
-				'label' => esc_html__( 'Function', 'tkt-search-and-filter' ),
+				'label' => esc_html__( 'Function', 'tkt-template-builder' ),
 				'type'  => 'hooks',
 				'inner' => true,
 			),
@@ -148,8 +148,8 @@ class Tkt_Template_Builder_Declarations {
 	public function data_map( $map ) {
 
 		$shortcode_types = array(
-			'templating'    => esc_html__( 'Templating', 'tkt-search-and-filter' ),
-			'hooks'         => esc_html__( 'Hooks & Functions', 'tkt-search-and-filter' ),
+			'templating'    => esc_html__( 'Templating', 'tkt-template-builder' ),
+			'hooks'         => esc_html__( 'Hooks & Functions', 'tkt-template-builder' ),
 		);
 
 		return $$map;
@@ -174,94 +174,94 @@ class Tkt_Template_Builder_Declarations {
 
 		$sanitization_options = array(
 			'none' => array(
-				'label'     => esc_html__( 'No Sanitization', 'tkt-search-and-filter' ),
+				'label'     => esc_html__( 'No Sanitization', 'tkt-template-builder' ),
 			),
 			'email' => array(
-				'label'     => esc_html__( 'Sanitize Email', 'tkt-search-and-filter' ),
+				'label'     => esc_html__( 'Sanitize Email', 'tkt-template-builder' ),
 				'callback'  => 'sanitize_email',
 			),
 			'file_name' => array(
-				'label'     => esc_html__( 'File Name', 'tkt-search-and-filter' ),
+				'label'     => esc_html__( 'File Name', 'tkt-template-builder' ),
 				'callback'  => 'sanitize_file_name',
 			),
 			'html_class' => array(
-				'label'     => esc_html__( 'HTML Class', 'tkt-search-and-filter' ),
+				'label'     => esc_html__( 'HTML Class', 'tkt-template-builder' ),
 				'callback'  => 'sanitize_html_class',
 			),
 			'key' => array(
-				'label'     => esc_html__( 'Key', 'tkt-search-and-filter' ),
+				'label'     => esc_html__( 'Key', 'tkt-template-builder' ),
 				'callback'  => 'sanitize_key',
 			),
 			'meta' => array(
-				'label'     => esc_html__( 'Meta', 'tkt-search-and-filter' ),
+				'label'     => esc_html__( 'Meta', 'tkt-template-builder' ),
 				'callback'  => 'sanitize_meta',
 			),
 			'mime_type' => array(
-				'label'     => esc_html__( 'Mime Type', 'tkt-search-and-filter' ),
+				'label'     => esc_html__( 'Mime Type', 'tkt-template-builder' ),
 				'callback'  => 'sanitize_mime_type',
 			),
 			'option' => array(
-				'label'     => esc_html__( 'Option', 'tkt-search-and-filter' ),
+				'label'     => esc_html__( 'Option', 'tkt-template-builder' ),
 				'callback'  => 'sanitize_option',
 			),
 			'sql_orderby' => array(
-				'label'     => esc_html__( 'SQL Orderby', 'tkt-search-and-filter' ),
+				'label'     => esc_html__( 'SQL Orderby', 'tkt-template-builder' ),
 				'callback'  => 'sanitize_sql_orderby',
 			),
 			'text_field' => array(
-				'label'     => esc_html__( 'Text Field', 'tkt-search-and-filter' ),
+				'label'     => esc_html__( 'Text Field', 'tkt-template-builder' ),
 				'callback'  => 'sanitize_text_field',
 			),
 			'textarea_field' => array(
-				'label'     => esc_html__( 'Text Area', 'tkt-search-and-filter' ),
+				'label'     => esc_html__( 'Text Area', 'tkt-template-builder' ),
 				'callback'  => 'sanitize_textarea_field',
 			),
 			'title' => array(
-				'label'     => esc_html__( 'Title', 'tkt-search-and-filter' ),
+				'label'     => esc_html__( 'Title', 'tkt-template-builder' ),
 				'callback'  => 'sanitize_title',
 			),
 			'title_for_query' => array(
-				'label'     => esc_html__( 'Title for Query', 'tkt-search-and-filter' ),
+				'label'     => esc_html__( 'Title for Query', 'tkt-template-builder' ),
 				'callback'  => 'sanitize_title_for_query',
 			),
 			'title_with_dashes' => array(
-				'label'     => esc_html__( 'Title with Dashes', 'tkt-search-and-filter' ),
+				'label'     => esc_html__( 'Title with Dashes', 'tkt-template-builder' ),
 				'callback'  => 'sanitize_title_with_dashes',
 			),
 			'user' => array(
-				'label'     => esc_html__( 'User', 'tkt-search-and-filter' ),
+				'label'     => esc_html__( 'User', 'tkt-template-builder' ),
 				'callback'  => 'sanitize_user',
 			),
 			'url_raw' => array(
-				'label'     => esc_html__( 'URL Raw', 'tkt-search-and-filter' ),
+				'label'     => esc_html__( 'URL Raw', 'tkt-template-builder' ),
 				'callback'  => 'esc_url_raw',
 			),
 			'post_kses' => array(
-				'label'     => esc_html__( 'Post KSES', 'tkt-search-and-filter' ),
+				'label'     => esc_html__( 'Post KSES', 'tkt-template-builder' ),
 				'callback'  => 'wp_filter_post_kses',
 			),
 			'nohtml_kses' => array(
-				'label'     => esc_html__( 'NoHTML KSES', 'tkt-search-and-filter' ),
+				'label'     => esc_html__( 'NoHTML KSES', 'tkt-template-builder' ),
 				'callback'  => 'wp_filter_nohtml_kses',
 			),
 			'absint' => array(
-				'label'     => esc_html__( 'Integer', 'tkt-search-and-filter' ),
+				'label'     => esc_html__( 'Integer', 'tkt-template-builder' ),
 				'callback'  => 'absint',
 			),
 			'intval' => array(
-				'label'     => esc_html__( 'Integer', 'tkt-search-and-filter' ),
+				'label'     => esc_html__( 'Integer', 'tkt-template-builder' ),
 				'callback'  => 'intval',
 			),
 			'floatval' => array(
-				'label'     => esc_html__( 'Float', 'tkt-search-and-filter' ),
+				'label'     => esc_html__( 'Float', 'tkt-template-builder' ),
 				'callback'  => 'floatval',
 			),
 			'is_bool' => array(
-				'label'     => esc_html__( 'Is Boolean', 'tkt-search-and-filter' ),
+				'label'     => esc_html__( 'Is Boolean', 'tkt-template-builder' ),
 				'callback'  => 'is_bool',
 			),
 			'boolval' => array(
-				'label'     => esc_html__( 'Boolean Value', 'tkt-search-and-filter' ),
+				'label'     => esc_html__( 'Boolean Value', 'tkt-template-builder' ),
 				'callback'  => 'boolval',
 			),
 		);

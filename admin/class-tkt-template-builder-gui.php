@@ -79,7 +79,7 @@ class Tkt_Template_Builder_Gui {
 		add_filter(
 			'tkt_scs_shortcodes_fieldset_explanation',
 			function( $explanation ) {
-				$explanation = __( 'What template to insert' );
+				$explanation = __( 'What template to insert', 'tkt-template-builder' );
 				return $explanation;
 			}
 		);
@@ -105,7 +105,7 @@ class Tkt_Template_Builder_Gui {
 		add_filter(
 			'tkt_scs_shortcodes_fieldset_explanation',
 			function( $explanation ) {
-				$explanation = __( 'What Menu to Show' );
+				$explanation = __( 'What Menu to Show', 'tkt-template-builder' );
 				return $explanation;
 			}
 		);
@@ -129,7 +129,7 @@ class Tkt_Template_Builder_Gui {
 		add_filter(
 			'tkt_scs_shortcodes_fieldset_explanation',
 			function( $explanation ) {
-				$explanation = __( 'What Menu Location to use (Wins over Menu setting above, if set)' );
+				$explanation = __( 'What Menu Location to use (Wins over Menu setting above, if set)', 'tkt-template-builder' );
 				return $explanation;
 			}
 		);
@@ -157,7 +157,7 @@ class Tkt_Template_Builder_Gui {
 		add_filter(
 			'tkt_scs_shortcodes_fieldset_explanation',
 			function( $explanation ) {
-				$explanation = __( 'Whether to preserve whitespace within the menu\'s HTML.' );
+				$explanation = __( 'Whether to preserve whitespace within the menu\'s HTML.', 'tkt-template-builder' );
 				return $explanation;
 			}
 		);
@@ -186,7 +186,7 @@ class Tkt_Template_Builder_Gui {
 		add_filter(
 			'tkt_scs_shortcodes_fieldset_explanation',
 			function( $explanation ) {
-				$explanation = __( 'What sidebar to include.' );
+				$explanation = __( 'What sidebar to include.', 'tkt-template-builder' );
 				return $explanation;
 			}
 		);
@@ -215,7 +215,7 @@ class Tkt_Template_Builder_Gui {
 		add_filter(
 			'tkt_scs_shortcodes_fieldset_explanation',
 			function( $explanation ) {
-				$explanation = __( 'What widget to include.' );
+				$explanation = __( 'What widget to include.', 'tkt-template-builder' );
 				return $explanation;
 			}
 		);
