@@ -150,8 +150,7 @@ if ( ! is_null( $main_template_object ) ) {
 
 } else {
 	$no_template_message = apply_filters( 'tkt_no_template_message', 'You have assigned a Template which does not exist. Perhaps it was deleted? ' );
-	// Translators: 1: Error message. @codingStandardsIgnoreLine
-	printf( esc_html__( '%s', 'tkt-template-builder' ), $no_template_message );
+	echo esc_html( $no_template_message );
 }
 
 /**

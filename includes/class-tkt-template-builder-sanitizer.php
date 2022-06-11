@@ -152,7 +152,7 @@ class Tkt_Template_Builder_Sanitizer {
 			|| is_null( $value )
 		) {
 
-			return new WP_Error( 'no_object', esc_html__( 'This is not an object', 'tkt-search-and-filter' ) );
+			return new WP_Error( 'no_object', esc_html__( 'This is not an object', 'tkt-template-builder' ) );
 
 		} elseif ( is_object( $value ) ) {
 
@@ -160,7 +160,7 @@ class Tkt_Template_Builder_Sanitizer {
 
 		} else {
 
-			return new WP_Error( 'no_object', esc_html__( 'Something else went wrong', 'tkt-search-and-filter' ) );
+			return new WP_Error( 'no_object', esc_html__( 'Something else went wrong', 'tkt-template-builder' ) );
 
 		}
 
@@ -181,7 +181,7 @@ class Tkt_Template_Builder_Sanitizer {
 		) {
 
 			// Translators: "%s" stands for an object property. "%s" should not be translated.
-			return new WP_Error( 'no_property', sprintf( esc_html__( 'The property "%s" does not exist in the Object', 'tkt-search-and-filter' ), $prop ) );
+			return new WP_Error( 'no_property', sprintf( esc_html__( 'The property "%s" does not exist in the Object', 'tkt-template-builder' ), $prop ) );
 
 		} elseif ( ! is_wp_error( $this->handle_object_validation( $value ) )
 			&& property_exists( $value, $prop )
@@ -191,7 +191,7 @@ class Tkt_Template_Builder_Sanitizer {
 
 		} else {
 
-			return new WP_Error( 'no_property', esc_html__( 'Something else went wrong', 'tkt-search-and-filter' ) );
+			return new WP_Error( 'no_property', esc_html__( 'Something else went wrong', 'tkt-template-builder' ) );
 
 		}
 
@@ -212,7 +212,7 @@ class Tkt_Template_Builder_Sanitizer {
 
 		} else {
 
-			return new WP_Error( 'no_array', esc_html__( 'This is not an array', 'tkt-search-and-filter' ) );
+			return new WP_Error( 'no_array', esc_html__( 'This is not an array', 'tkt-template-builder' ) );
 
 		}
 
@@ -235,7 +235,7 @@ class Tkt_Template_Builder_Sanitizer {
 
 		} else {
 
-			return new WP_Error( 'invalid_opeartor', esc_html__( 'This is not a valid Operator', 'tkt-search-and-filter' ) );
+			return new WP_Error( 'invalid_opeartor', esc_html__( 'This is not a valid Operator', 'tkt-template-builder' ) );
 
 		}
 
@@ -350,7 +350,7 @@ class Tkt_Template_Builder_Sanitizer {
 
 		$errors = array();
 
-		$errors['display'] = esc_html__( 'Something wrong. Enable Debug mode and check again.', 'tkt-search-and-filter' );
+		$errors['display'] = esc_html__( 'Something wrong. Enable Debug mode and check again.', 'tkt-template-builder' );
 
 		if ( is_null( $result ) ) {
 			$errors['debug']  = 'The response was null in ' . $location;
@@ -363,13 +363,18 @@ class Tkt_Template_Builder_Sanitizer {
 		}
 
 		if ( true === $this->debug ) {
+			/**
+			 * Reviewers:
+			 * All debug logs are expected here.
+			 * They are only active if debug is enabled in this class, which by default is false.
+			 */
 			if ( true === $this->log_debug ) {
-				error_log( $errors['debug'] . ' This is the full backlog: ' . print_r( $backtrace, true ) );
+				error_log( $errors['debug'] . ' This is the full backlog: ' . print_r( $backtrace, true ) );// @codingStandardsIgnoreLine
 			}
 			return $errors['debug'];
 		}
 		if ( true === $this->log_debug ) {
-			error_log( $errors['debug'] . ' This is the full backlog: ' . print_r( $backtrace, true ) );
+			error_log( $errors['debug'] . ' This is the full backlog: ' . print_r( $backtrace, true ) );// @codingStandardsIgnoreLine
 		}
 
 		return $errors['display'];

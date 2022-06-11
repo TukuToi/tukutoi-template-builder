@@ -232,9 +232,24 @@ class Tkt_Shortcodes_Processor {
 		$counts = preg_match_all( $expression, $content, $matches );
 
 		foreach ( $matches[0] as $index => $match ) {
-			// Encode the data to stop WP from trying to fix or parse it.
-			// The iterator shortcode will manage this on render.
-			$match_encoded = str_replace( $matches[1][ $index ], $this->base64_prefix . base64_encode( $matches[1][ $index ] ), $match );
+			/**
+			 * Encode the data to stop WP from trying to fix or parse it.
+			 * The iterator shortcode will manage this on render.
+			 *
+			 * Reviewers:
+			 * This usage of base64_encode() is safe. We do not encode anything unknown.
+			 * All data we encode here is basically the content of (or a) shortcode added by
+			 * someone with manage_options rights in the CP Admin > TukuToi Template or else editors.
+			 *
+			 * No external data, no computed data, no obfuscated data is passed here.
+			 * The reason we need to encode this is, WP has a nack of messing around with nested shortcodes.
+			 * Like [shortcode attr="[shortcode]"] will result in a lot of stripped content.
+			 * Or even [shortcode]<html>[shortcodes]<more html attr="[shortcode]">[shortcodes]</more html></html>[/shortcode] will result in the first level of shortcodes expanded and
+			 * the rest stripped out either by do_shortcode() or the_content(). To avoid this, we base64 encode the parts we do want to expand/process only _later_.
+			 *
+			 * Note that this approach is battle tested by Toolset since at least 6 years.
+			 */
+			$match_encoded = str_replace( $matches[1][ $index ], $this->base64_prefix . base64_encode( $matches[1][ $index ] ), $match );// @codingStandardsIgnoreLine
 			$content = str_replace( $match, $match_encoded, $content );
 		}
 
@@ -297,7 +312,15 @@ class Tkt_Shortcodes_Processor {
 		if ( 0 === strpos( $content, $this->base64_prefix ) ) {
 
 			$content = substr( $content, strlen( $this->base64_prefix ) );
-			$content = base64_decode( $content );
+			/**
+			 * Decode the encoded content
+			 *
+			 * Reviewers:
+			 * This is safe and intended.
+			 *
+			 * @see $this->encode_iterators() for comments.
+			 */
+			$content = base64_decode( $content );// @codingStandardsIgnoreLine
 
 		}
 

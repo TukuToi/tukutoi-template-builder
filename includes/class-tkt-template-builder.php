@@ -294,6 +294,9 @@ class Tkt_Template_Builder {
 		 *
 		 * Again we will likely miss some actions, specially arbitrary 3rd party backend AJAX actions.
 		 * But at least we do not break the plugin, and exclude our front end stuff on most of the native actions.
+		 *
+		 * Reviewers:
+		 * It is not possible nor required to check on nonce for the IF blocks including $_REQUEST.
 		 */
 		$backend_only_ajax_actions = array(
 			'heartbeat', // WP HeartBeat call.
@@ -315,9 +318,9 @@ class Tkt_Template_Builder {
 		);
 		if ( is_admin()
 			&& ! wp_doing_ajax() // It is not an AJAX call.
-			|| ( isset( $_REQUEST['action'] )
-				&& ( in_array( $_REQUEST['action'], $backend_only_ajax_actions )
-					|| isset( $_REQUEST['doing_wp_cron'] )
+			|| ( isset( $_REQUEST['action'] )// @codingStandardsIgnoreLine
+				&& ( in_array( $_REQUEST['action'], $backend_only_ajax_actions )// @codingStandardsIgnoreLine
+					|| isset( $_REQUEST['doing_wp_cron'] )// @codingStandardsIgnoreLine
 				)
 			)
 		) {
