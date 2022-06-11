@@ -3,6 +3,10 @@
 
 ## Changelog
 
+### 1.8.5
+[Fixed] Template ShortCode not parsing nested ShortCodes
+[Fixed] funktion ShortCode wrongly passing arguments with '' apostrophes
+
 ### 1.8.3
 * [Fixed] bootstrap navbar shortcode unused argument
 

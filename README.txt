@@ -5,7 +5,7 @@ Tags: templates, archives, design
 Requires at least: 4.9.0
 Requires PHP: 7.0.0
 Tested up to: 4.9.99
-Stable tag: 1.8.3
+Stable tag: 1.8.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,6 +14,10 @@ TukuToi Template Builder allows you to create any kind of Template for your Word
 == Description ==
 
 == Changelog ==
+
+= 1.8.5 =
+[Fixed] Template ShortCode not parsing nested ShortCodes
+[Fixed] funktion ShortCode wrongly passing arguments with '' apostrophes
 
 = 1.8.3 =
 * [Fixed] bootstrap navbar shortcode unused argument

@@ -106,7 +106,7 @@ class Tkt_Template_Builder_Shortcodes {
 		 * @since 1.3.0
 		 * @todo Check if that is necessary and if we can check something like did_filter.
 		 */
-		$out = apply_filters( 'tkt_post_process_shortcodes', get_post( $atts['id'] )->post_content );
+		$out = apply_filters( 'tkt_pre_process_shortcodes', get_post( $atts['id'] )->post_content );
 		$out = do_shortcode( $out );
 
 		/**
@@ -267,11 +267,11 @@ class Tkt_Template_Builder_Shortcodes {
 						$args_pre = explode( ',', $value );
 						foreach ( $args_pre as $key => $arrval ) {
 							list( $k, $v ) = explode( ':', $arrval );
-							$args[ $k ] = is_numeric( $v ) ? (int) $v : '\'' . $v . '\'';
+							$args[ $k ] = is_numeric( $v ) ? (int) $v : $v;
 						}
 					} else {
 						list( $k, $v ) = explode( ':', $value );
-						$args[ $k ] = is_numeric( $v ) ? (int) $v : '\'' . $v . '\'';
+						$args[ $k ] = is_numeric( $v ) ? (int) $v : $v;
 					}
 				}
 			} else {
