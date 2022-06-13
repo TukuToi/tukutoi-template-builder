@@ -88,7 +88,7 @@ if ( ( isset( $template_options['global_footer'] )
 			$global_head = isset( $template_options['global_header'] ) ? $template_options['global_header'] : '';
 			printf( '<option value="theme_header" ' . esc_attr( $theme_header ) . '>%s</option>', esc_html__( 'Theme Header', 'tkt-template-builder' ) );
 			printf( '<option value="no_header" ' . esc_attr( $no_header ) . '>%s</option>', esc_html__( 'No Header', 'tkt-template-builder' ) );
-			printf( '<option value="%s" ' . esc_attr( $global_header ) . '>%s</option>', esc_attr( $template_options['global_header'] ), esc_html__( 'Global Header', 'tkt-template-builder' ) );
+			printf( '<option value="%s" ' . esc_attr( $global_header ) . '>%s</option>', esc_attr( $global_head ), esc_html__( 'Global Header', 'tkt-template-builder' ) );
 			?>
 		</select>
 	</div>

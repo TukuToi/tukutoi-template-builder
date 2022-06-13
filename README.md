@@ -3,6 +3,9 @@
 
 ## Changelog
 
+### 1.8.7
+[Fixed] Undefined Global Header
+
 ### 1.8.6
 [Fixed] Missing Text Domains and some Comments for CPCS Review.
 
