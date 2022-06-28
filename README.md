@@ -3,6 +3,9 @@
 
 ## Changelog
 
+### 1.8.9
+[Fixed] Uninstall checked on wrong plugin slug
+
 ### 1.8.7
 [Fixed] Undefined Global Header
 
