@@ -86,7 +86,7 @@ if ( ! class_exists( 'WP_Bootstrap_Navwalker' ) ) {
 		 * Starts the element output.
 		 *
 		 * @since WP 3.0.0
-		 * @since WP 4.4.0 The {@see 'nav_menu_item_args'} filter was added.
+		 * @since WP 4.4.0 The {@see nav_menu_item_args()} filter was added.
 		 *
 		 * @see Walker_Nav_Menu::start_el()
 		 *

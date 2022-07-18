@@ -345,7 +345,7 @@ class Tkt_Template_Builder_Shortcodes {
 	 *     @type string $menu_class          CSS class to use for the ul element which forms the menu. Default 'menu'. Accepts: valid CSS class.
 	 *     @type string menu_id              The ID that is applied to the ul element which forms the menu. Default is the menu slug, incremented. Accepts: valid CSS ID.
 	 *     @type string container            Whether to wrap the ul, and what to wrap it with. Default 'div'. Accepts: valid HTML tag.
-	 *     @type string container_class      Class that is applied to the container. Default 'menu-{menu slug}-container'. Accepts: valid CSS class.
+	 *     @type string container_class      Class that is applied to the container. Default 'menu-[menu slug]-container'. Accepts: valid CSS class.
 	 *     @type string container_id         The ID that is applied to the container. Default: ''. Accepts: valid CSS ID.
 	 *     @type string container_aria_label The aria-label attribute that is applied to the container when it's a nav element. Default: ''. Accepts: valid aria-label attribute value
 	 *     @type string fallback_cb          If the menu doesn't exist, a callback function will fire. Default: 'wp_page_menu'. Accepts: 'false', valid callback.
@@ -444,10 +444,10 @@ class Tkt_Template_Builder_Shortcodes {
 	 *      The ShortCode Attributes.
 	 *
 	 *      @type string    $widget        The Widget to display. Default: ''. Accepts: valid Widget ClassName.
-	 *      @type string    $before_widget HTML content that will be prepended to the widget's HTML output. Default: '<div class="widget %s">' (where %s is widget's class name). Accepts: valid HTML opening tag.
-	 *      @type string    $after_widget  HTML content that will be appended to the widget's HTML output. Default: '</div>'. Accepts: valid HTML closing tag.
-	 *      @type string    $before_title  HTML content that will be prepended to the widget's title when displayed. Default '<h2 class="widgettitle">'. Accepts: valid HTML opening tag.
-	 *      @type string    $after_title   HTML content that will be appended to the widget's title when displayed. Default </h2>. Accepts: valid HTML closing tag.
+	 *      @type string    $before_widget HTML content that will be prepended to the widget's HTML output. Default: &lt;div class=&quot;widget %s&quot;&gt; (where %s is widget's class name). Accepts: valid HTML opening tag.
+	 *      @type string    $after_widget  HTML content that will be appended to the widget's HTML output. Default: &lt;/div&gt;. Accepts: valid HTML closing tag.
+	 *      @type string    $before_title  HTML content that will be prepended to the widget's title when displayed. Default &lt;h2 class=&quot;widgettitle&quot;&gt;. Accepts: valid HTML opening tag.
+	 *      @type string    $after_title   HTML content that will be appended to the widget's title when displayed. Default &lt;/h2&gt;. Accepts: valid HTML closing tag.
 	 * }
 	 * @param mixed  $content   ShortCode enclosed content. Not applicable for this ShortCode, <strong><em>unless</em></strong> for 'WP_Widget_Custom_HTML' and 'WP_Widget_Text', where the wrapped $content will be the content of the HTML or Text widget.
 	 * @param string $tag       The Shortcode tag. Value: 'widget'.
