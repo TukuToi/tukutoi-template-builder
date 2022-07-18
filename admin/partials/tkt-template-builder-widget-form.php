@@ -6,9 +6,8 @@
  *
  * @link       https://www.tukutoi.com/
  * @since      1.0.0
- *
- * @package    Tkt_Search_And_Filter
- * @subpackage Tkt_Search_And_Filter/admin/partials
+ * @package    Plugins\TemplateBuilder\Admin\Partials
+ * @author     Beda Schmid <beda@tukutoi.com>
  */
 
 ?>

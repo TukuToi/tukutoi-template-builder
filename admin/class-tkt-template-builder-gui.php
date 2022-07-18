@@ -3,7 +3,8 @@
  * This file includes the ShortCodes GUI interfaces.
  *
  * @since 1.4.0
- * @package Tkt_Template_Builder/admin
+ * @package    Plugins\TemplateBuilder\Admin
+ * @author     Beda Schmid <beda@tukutoi.com>
  */
 
 /**
@@ -17,9 +18,8 @@
  * The almost to all the same thing, unless one or two. Thus use arguments, not new methods.
  *
  * @since      1.4.0
- * @package    Tkt_Template_Builder
- * @subpackage Tkt_Template_Builder/admin
- * @author     Your Name <hello@tukutoi.com>
+ * @package    Plugins\TemplateBuilder\Admin
+ * @author     Beda Schmid <beda@tukutoi.com>
  */
 class Tkt_Template_Builder_Gui {
 
@@ -63,15 +63,15 @@ class Tkt_Template_Builder_Gui {
 		 * Additionally they tray to assign this to that, and then that to this.
 		 * Unfortunately we have to avoid this and that means a bit of query time.
 		 */
-		$args = array(
-			'post_status'   => array( 'publish' ),
-			'post_type'     => array( 'tkt_tmplt_bldr_templ' ),
+		$args          = array(
+			'post_status' => array( 'publish' ),
+			'post_type'   => array( 'tkt_tmplt_bldr_templ' ),
 		);
 		$tkt_templates = get_posts( $args );
 
 		foreach ( $tkt_templates as $key => $object ) {
-			$label = $object->post_title;
-			$id  = $object->ID;
+			$label    = $object->post_title;
+			$id       = $object->ID;
 			$selected = '' === $object->ID ? 'selected' : '';
 			printf( '<option value="%s" ' . esc_attr( $selected ) . '>%s</option>', esc_attr( $id ), esc_html( $label ) );
 		}
@@ -96,8 +96,8 @@ class Tkt_Template_Builder_Gui {
 		$menu_objects = wp_get_nav_menus();
 
 		foreach ( $menu_objects as $key => $object ) {
-			$label = $object->name;
-			$slug  = $object->slug;
+			$label    = $object->name;
+			$slug     = $object->slug;
 			$selected = '' === $object->slug ? 'selected' : '';
 			printf( '<option value="%s" ' . esc_attr( $selected ) . '>%s</option>', esc_attr( $slug ), esc_html( $label ) );
 		}

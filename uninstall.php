@@ -20,7 +20,8 @@
  *
  * @link       https://www.tukutoi/
  * @since      0.0.1
- * @package    Tkt_Template_Builder
+ * @package    Plugins\TemplateBuilder
+ * @author     Beda Schmid <beda@tukutoi.com>
  */
 
 /**

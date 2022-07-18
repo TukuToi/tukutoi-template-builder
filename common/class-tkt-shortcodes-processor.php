@@ -10,8 +10,8 @@
  *
  * @link       https://www.tukutoi.com/
  * @since      1.0.0
- *
- * @package    Tkt_Common
+ * @package    Common\Plugins\ShortCodes
+ * @author     Beda Schmid <beda@tukutoi.com>
  */
 
 /**
@@ -27,8 +27,8 @@
  * This class attempts to fix that.
  *
  * @since      1.3.0
- * @package    Tkt_Common
- * @author     Your Name <hello@tukutoi.com>
+ * @package    Common\Plugins\ShortCodes
+ * @author     Beda Schmid <beda@tukutoi.com>
  */
 class Tkt_Shortcodes_Processor {
 
@@ -69,13 +69,13 @@ class Tkt_Shortcodes_Processor {
 	 */
 	public function __construct( $plugin_prefix, $version, $declarations ) {
 
-		$this->plugin_prefix    = $plugin_prefix;
-		$this->version          = $version;
-		$this->declarations     = $declarations;
-		$this->shortcode_start  = '{¡{';
-		$this->shortcode_end    = '}¡}';
-		$this->loop_shortcode   = 'tkt_scs_loop';
-		$this->base64_prefix    = 'tkt_base64_';
+		$this->plugin_prefix   = $plugin_prefix;
+		$this->version         = $version;
+		$this->declarations    = $declarations;
+		$this->shortcode_start = '{¡{';
+		$this->shortcode_end   = '}¡}';
+		$this->loop_shortcode  = 'tkt_scs_loop';
+		$this->base64_prefix   = 'tkt_base64_';
 
 	}
 
@@ -171,13 +171,13 @@ class Tkt_Shortcodes_Processor {
 	 */
 	private function encode_html_attribute_shortcodes( $content ) {
 		// Normalize entities.
-		$trans = array(
+		$trans   = array(
 			'&#91;' => '&#091;', // Encoded [.
 			'&#93;' => '&#093;', // Encoded ].
 		);
 		$content = strtr( $content, $trans );
 
-		$textarr = $this->html_split( $content );
+		$textarr           = $this->html_split( $content );
 		$inner_expressions = $this->get_inner_expressions();
 		if ( ! empty( $inner_expressions && isset( $inner_expressions['regex'] ) ) ) {
 			foreach ( $textarr as &$element ) {
@@ -198,7 +198,7 @@ class Tkt_Shortcodes_Processor {
 
 							$replacement = str_replace( '[', $this->shortcode_start, $match );
 							$replacement = str_replace( ']', $this->shortcode_end, $replacement );
-							$element = str_replace( $string_to_replace, $replacement, $element );
+							$element     = str_replace( $string_to_replace, $replacement, $element );
 
 						}
 					}
@@ -229,7 +229,7 @@ class Tkt_Shortcodes_Processor {
 
 		// Get only properly configured loops (enclosing).
 		$expression = '/\\[' . $this->loop_shortcode . '.*?\\](.*?)\\[\\/' . $this->loop_shortcode . '\\]/is';
-		$counts = preg_match_all( $expression, $content, $matches );
+		$counts     = preg_match_all( $expression, $content, $matches );
 
 		foreach ( $matches[0] as $index => $match ) {
 			/**
@@ -250,7 +250,7 @@ class Tkt_Shortcodes_Processor {
 			 * Note that this approach is battle tested by Toolset since at least 6 years.
 			 */
 			$match_encoded = str_replace( $matches[1][ $index ], $this->base64_prefix . base64_encode( $matches[1][ $index ] ), $match );// @codingStandardsIgnoreLine
-			$content = str_replace( $match, $match_encoded, $content );
+			$content       = str_replace( $match, $match_encoded, $content );
 		}
 
 		return $content;
@@ -267,7 +267,7 @@ class Tkt_Shortcodes_Processor {
 
 		// Search for outer shortcodes, to process their inner expressions.
 		$outer_shortcodes = array();
-		$counts = $this->find_outer_brackets( $content, $outer_shortcodes );
+		$counts           = $this->find_outer_brackets( $content, $outer_shortcodes );
 
 		// Iterate shortcode elements and resolve their internal shortcodes, one by one.
 		if ( 0 < $counts ) {
@@ -286,7 +286,7 @@ class Tkt_Shortcodes_Processor {
 							foreach ( $inner_shortcodes[0] as &$inner_shortcode ) {
 
 								$replacement = do_shortcode( $inner_shortcode );
-								$content = str_replace( $inner_shortcode, $replacement, $content );
+								$content     = str_replace( $inner_shortcode, $replacement, $content );
 							}
 						}
 					}
@@ -345,7 +345,7 @@ class Tkt_Shortcodes_Processor {
 		foreach ( $shortcodes as $key => $shortcode ) {
 
 			$executed = do_shortcode( '[' . $shortcode . ']' );
-			$content = str_replace( $this->shortcode_start . $shortcode . $this->shortcode_end, $executed, $content );
+			$content  = str_replace( $this->shortcode_start . $shortcode . $this->shortcode_end, $executed, $content );
 
 		}
 
@@ -441,7 +441,7 @@ class Tkt_Shortcodes_Processor {
 			return true;
 		}
 
-		$noopen = false === strpos( $element, '[' );
+		$noopen  = false === strpos( $element, '[' );
 		$noclose = false === strpos( $element, ']' );
 		if (
 			$noopen
@@ -476,7 +476,7 @@ class Tkt_Shortcodes_Processor {
 
 		$first = strpos( $content, '[' );
 		if ( false !== $first ) {
-			$length = strlen( $content );
+			$length      = strlen( $content );
 			$brace_count = 0;
 			$brace_start = -1;
 			for ( $i = $first; $i < $length; $i++ ) {
@@ -568,17 +568,17 @@ class Tkt_Shortcodes_Processor {
 	public function get_all_matches_between( $str, $start, $end ) {
 
 		$contents = array();
-		$start_l = strlen( $start );
-		$end_l = strlen( $end );
+		$start_l  = strlen( $start );
+		$end_l    = strlen( $end );
 
 		$start_match = $match_start = $match_end = 0;
 		while ( false !== ( $match_start = strpos( $str, $start, $start_match ) ) ) {
 			$match_start += $start_l;
-			$match_end = strpos( $str, $end, $match_start );
+			$match_end    = strpos( $str, $end, $match_start );
 			if ( false === $match_end ) {
 				break;
 			}
-			$contents[] = substr( $str, $match_start, $match_end - $match_start );
+			$contents[]  = substr( $str, $match_start, $match_end - $match_start );
 			$start_match = $match_end + $end_l;
 		}
 

@@ -7,9 +7,8 @@
  *
  * @link       https://www.tukutoi/
  * @since      0.0.1
- *
- * @package    Tkt_Template_Builder
- * @subpackage Tkt_Template_Builder/includes
+ * @package    Plugins\TemplateBuilder\Includes
+ * @author     Beda Schmid <beda@tukutoi.com>
  */
 
 /**
@@ -22,9 +21,8 @@
  * version of the plugin.
  *
  * @since      0.0.1
- * @package    Tkt_Template_Builder
- * @subpackage Tkt_Template_Builder/includes
- * @author     Your Name <hello@tukutoi.com>
+ * @package    Plugins\TemplateBuilder\Includes
+ * @author     Beda Schmid <beda@tukutoi.com>
  */
 class Tkt_Template_Builder {
 
@@ -86,7 +84,7 @@ class Tkt_Template_Builder {
 
 		}
 
-		$this->plugin_name = 'tkt-template-builder';
+		$this->plugin_name   = 'tkt-template-builder';
 		$this->plugin_prefix = 'tkt_tmplt_bldr_';
 
 		$this->load_dependencies();
@@ -153,7 +151,7 @@ class Tkt_Template_Builder {
 		 * NOTE: Loaded only once.
 		 */
 		if ( ! defined( 'TKT_COMMON_LOADED' ) ) {
-			require_once( plugin_dir_path( dirname( __FILE__ ) ) . '/common/class-tkt-common.php' );
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . '/common/class-tkt-common.php';
 		}
 		$this->common = Tkt_Common::get_instance();
 

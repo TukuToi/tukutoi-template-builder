@@ -8,8 +8,8 @@
  * that starts the plugin.
  *
  * @link              https://www.tukutoi/
- * @since             0.0.1
- * @package           Tkt_Template_Builder
+ * @package    Plugins\TemplateBuilder
+ * @author     Beda Schmid <beda@tukutoi.com>
  *
  * @wordpress-plugin
  * Plugin Name:       TukuToi Template Builder
@@ -34,16 +34,19 @@ if ( ! defined( 'WPINC' ) ) {
 
 /**
  * Current plugin version.
- * Start at version 0.0.1 and use SemVer - https://semver.org
+ *
+ * Start at version 0.0.1 and use SemVer
  * Rename this for your plugin and update it as you release new versions.
+ * 
+ * @see https://semver.org
+ * @var string $TKT_TEMPLATE_BUILDER_VERSION The version of this plugin.
  */
 define( 'TKT_TEMPLATE_BUILDER_VERSION', '1.8.9' );
 
 /**
  * The code that runs during plugin activation.
  *
- * This action is documented in includes/class-tkt-template-builder-activator.php
- * Full security checks are performed inside the class.
+ * @link Tkt_Template_Builder_Activator::activate()
  */
 function tkt_tmplt_bldr_activate() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-tkt-template-builder-activator.php';
@@ -53,8 +56,7 @@ function tkt_tmplt_bldr_activate() {
 /**
  * The code that runs during plugin deactivation.
  *
- * This action is documented in includes/class-tkt-template-builder-deactivator.php
- * Full security checks are performed inside the class.
+ * @link Tkt_Template_Builder_Deactivator::deactivate()
  */
 function tkt_tmplt_bldr_deactivate() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-tkt-template-builder-deactivator.php';

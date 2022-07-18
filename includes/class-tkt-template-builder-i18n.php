@@ -7,9 +7,8 @@
  *
  * @link       https://www.tukutoi/
  * @since      0.0.1
- *
- * @package    Tkt_Template_Builder
- * @subpackage Tkt_Template_Builder/includes
+ * @package    Plugins\TemplateBuilder\Includes
+ * @author     Beda Schmid <beda@tukutoi.com>
  */
 
 /**
@@ -22,9 +21,8 @@
  *       This, if true, makes this class a total waste of code.
  *
  * @since      0.0.1
- * @package    Tkt_Template_Builder
- * @subpackage Tkt_Template_Builder/includes
- * @author     Your Name <hello@tukutoi.com>
+ * @package    Plugins\TemplateBuilder\Includes
+ * @author     Beda Schmid <beda@tukutoi.com>
  */
 class Tkt_Template_Builder_I18n {
 

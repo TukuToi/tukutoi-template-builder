@@ -4,9 +4,8 @@
  *
  * @link       https://www.tukutoi/
  * @since      0.0.1
- *
- * @package    Tkt_Template_Builder
- * @subpackage Tkt_Template_Builder/public
+ * @package    Plugins\TemplateBuilder\Public
+ * @author     Beda Schmid <beda@tukutoi.com>
  */
 
 /**
@@ -16,9 +15,8 @@
  * enqueue the public-facing stylesheet and JavaScript.
  * As you add hooks and methods, update this description.
  *
- * @package    Tkt_Template_Builder
- * @subpackage Tkt_Template_Builder/public
- * @author     Your Name <hello@tukutoi.com>
+ * @package    Plugins\TemplateBuilder\Public
+ * @author     Beda Schmid <beda@tukutoi.com>
  */
 class Tkt_Template_Builder_Public {
 
@@ -61,7 +59,7 @@ class Tkt_Template_Builder_Public {
 
 		$this->plugin_name   = $plugin_name;
 		$this->plugin_prefix = $plugin_prefix;
-		$this->version = $version;
+		$this->version       = $version;
 
 	}
 
@@ -122,7 +120,7 @@ class Tkt_Template_Builder_Public {
 		 * Get our Post Content, pass it thru the_content Filter, apply the content template
 		 */
 		$content_template_id = $available_content_templates[ $post->post_type ];
-		$content = apply_filters( 'the_content', get_post( $content_template_id )->post_content );
+		$content             = apply_filters( 'the_content', get_post( $content_template_id )->post_content );
 
 		/**
 		 * Re-Hook our filter.
@@ -237,7 +235,7 @@ class Tkt_Template_Builder_Public {
 	 * We then get these settings with:
 	 * `$template_id = apply_filters( 'tkt_template_id', 0 );`
 	 *
-	 * @see {/tukutoi-template-builder/public/partials/tkt-template-builder-public-display.php}
+	 * @see Plugins\TemplateBuilder\Public\Partials
 	 * @param int $template_id The Template ID to load. Default: array(). Accepts: valid Settings array.
 	 */
 	public function get_template_id( $template_id ) {
@@ -253,7 +251,7 @@ class Tkt_Template_Builder_Public {
 	 * We then get these settings with:
 	 * `$template_id = apply_filters( 'tkt_template_settings', array() );`
 	 *
-	 * @see {/tukutoi-template-builder/public/partials/tkt-template-builder-public-display.php}
+	 * @see Plugins\TemplateBuilder\Public\Partials
 	 * @param int $template_id The Template ID to load. Default: array(). Accepts: valid Settings array.
 	 */
 	public function get_template_settings( $template_id ) {
@@ -275,16 +273,16 @@ class Tkt_Template_Builder_Public {
 	public function add_special_tags_to_wp_kses( $allowed_html_tags, $context ) {
 
 		$allowed_html_tags['meta'] = array(
-			'charset' => true,
-			'content' => true,
+			'charset'    => true,
+			'content'    => true,
 			'http-equiv' => true,
-			'name' => true,
+			'name'       => true,
 		);
 		$allowed_html_tags['link'] = array(
-			'rel' => true,
-			'as' => true,
-			'href' => true,
-			'type' => true,
+			'rel'         => true,
+			'as'          => true,
+			'href'        => true,
+			'type'        => true,
 			'crossorigin' => true,
 		);
 

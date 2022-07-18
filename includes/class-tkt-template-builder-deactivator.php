@@ -4,9 +4,8 @@
  *
  * @link       https://www.tukutoi/
  * @since      0.0.1
- *
- * @package    Tkt_Template_Builder
- * @subpackage Tkt_Template_Builder/includes
+ * @package    Plugins\TemplateBuilder\Includes
+ * @author     Beda Schmid <beda@tukutoi.com>
  */
 
 /**
@@ -16,9 +15,8 @@
  *
  * @todo This should probably be in one "Setup" Class together with Activator class.
  * @since      0.0.1
- * @package    Tkt_Template_Builder
- * @subpackage Tkt_Template_Builder/includes
- * @author     Your Name <hello@tukutoi.com>
+ * @package    Plugins\TemplateBuilder\Includes
+ * @author     Beda Schmid <beda@tukutoi.com>
  */
 class Tkt_Template_Builder_Deactivator {
 
@@ -108,7 +106,7 @@ class Tkt_Template_Builder_Deactivator {
 			} elseif ( isset( $_REQUEST['checked'] ) ) {
 				if ( false !== wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) ), 'bulk-plugins' ) ) {
 
-					self::$request['action'] = sanitize_text_field( wp_unslash( $_REQUEST['action'] ) );
+					self::$request['action']  = sanitize_text_field( wp_unslash( $_REQUEST['action'] ) );
 					self::$request['plugins'] = array_map( 'sanitize_text_field', wp_unslash( $_REQUEST['checked'] ) );
 
 					return self::$request;

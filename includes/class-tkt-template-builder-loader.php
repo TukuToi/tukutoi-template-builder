@@ -4,9 +4,8 @@
  *
  * @link       https://www.tukutoi/
  * @since      0.0.1
- *
- * @package    Tkt_Template_Builder
- * @subpackage Tkt_Template_Builder/includes
+ * @package    Plugins\TemplateBuilder\Includes
+ * @author     Beda Schmid <beda@tukutoi.com>
  */
 
 /**
@@ -16,9 +15,8 @@
  * the plugin, and register them with the WordPress API. Call the
  * run function to execute the list of actions and filters.
  *
- * @package    Tkt_Template_Builder
- * @subpackage Tkt_Template_Builder/includes
- * @author     Your Name <hello@tukutoi.com>
+ * @package    Plugins\TemplateBuilder\Includes
+ * @author     Beda Schmid <beda@tukutoi.com>
  */
 class Tkt_Template_Builder_Loader {
 
@@ -56,9 +54,9 @@ class Tkt_Template_Builder_Loader {
 	 */
 	public function __construct() {
 
-		$this->actions      = array();
-		$this->filters      = array();
-		$this->shortcodes   = array();
+		$this->actions    = array();
+		$this->filters    = array();
+		$this->shortcodes = array();
 
 	}
 
@@ -99,7 +97,7 @@ class Tkt_Template_Builder_Loader {
 	 * @param    string $method_to_remove Method name for the filter's callback.
 	 * @param    int    $priority         The priority of the method (default 10).
 	 *
-	 * @return   $removed bool Whether the function is removed.
+	 * @return bool $removed  Whether the function is removed.
 	 */
 	public function remove_filter( $tag, $class_name = '', $method_to_remove = '', $priority = 10 ) {
 
@@ -134,7 +132,7 @@ class Tkt_Template_Builder_Loader {
 	 * @param    string $method_to_remove Method name for the filter's callback.
 	 * @param    int    $priority         The priority of the method (default 10).
 	 *
-	 * @return   $removed bool Whether the function is removed.
+	 * @return bool $removed Whether the function is removed.
 	 */
 	public function remove_action( $tag, $class_name = '', $method_to_remove = '', $priority = 10 ) {
 		return $this->remove_filter( $tag, $class_name, $method_to_remove, $priority );

@@ -4,9 +4,8 @@
  *
  * @link       https://www.tukutoi/
  * @since      0.0.1
- *
- * @package    Tkt_Template_Builder
- * @subpackage Tkt_Template_Builder/admin
+ * @package    Plugins\TemplateBuilder\Admin
+ * @author     Beda Schmid <beda@tukutoi.com>
  */
 
 /**
@@ -21,9 +20,8 @@
  * - Add Help Tabs
  * - Add ShortCodes to TukuToi ShortCodes GUI
  *
- * @package    Tkt_Template_Builder
- * @subpackage Tkt_Template_Builder/admin
- * @author     Your Name <hello@tukutoi.com>
+ * @package    Plugins\TemplateBuilder\Admin
+ * @author     Beda Schmid <beda@tukutoi.com>
  */
 class Tkt_Template_Builder_Admin {
 
@@ -243,9 +241,9 @@ class Tkt_Template_Builder_Admin {
 		 * We still allow users or plugins to manipulate the supported Taxonomies,
 		 * after all our operations. So if, then can.
 		 */
-		$taxonomies = get_taxonomies(
+		$taxonomies            = get_taxonomies(
 			array(
-				'public' => true,
+				'public'   => true,
 				'_builtin' => false,
 			),
 			'objects'
@@ -281,19 +279,19 @@ class Tkt_Template_Builder_Admin {
 		 * @todo move this to a Declarations/Comfig file.
 		 */
 		$templates = array(
-			0                               => esc_html__( 'Generic Templates', 'tkt-template-builder' ),
-			'index_template'                => esc_html__( 'Everything (Index)', 'tkt-template-builder' ),
-			'global_header'                 => esc_html__( 'Global Header', 'tkt-template-builder' ),
-			'global_footer'                 => esc_html__( 'Global Footer', 'tkt-template-builder' ),
-			'singular_template'             => esc_html__( 'All Single Pages, Posts & Custom Posts', 'tkt-template-builder' ),
-			'optgroupend'                   => '',
-			1                               => esc_html__( 'Particular Templates', 'tkt-template-builder' ),
-			'attachment_template'           => esc_html__( 'Attachments', 'tkt-template-builder' ),
-			'embed_template'                => esc_html__( 'Embeds', 'tkt-template-builder' ),
-			'frontpage_template'            => esc_html__( 'Front Page', 'tkt-template-builder' ),
-			'home_template'                 => esc_html__( 'Home Page', 'tkt-template-builder' ),
-			'privacypolicy_template'        => esc_html__( 'Privacy Policy Page', 'tkt-template-builder' ),
-			'404_template'                  => esc_html__( '404 Page', 'tkt-template-builder' ),
+			0                        => esc_html__( 'Generic Templates', 'tkt-template-builder' ),
+			'index_template'         => esc_html__( 'Everything (Index)', 'tkt-template-builder' ),
+			'global_header'          => esc_html__( 'Global Header', 'tkt-template-builder' ),
+			'global_footer'          => esc_html__( 'Global Footer', 'tkt-template-builder' ),
+			'singular_template'      => esc_html__( 'All Single Pages, Posts & Custom Posts', 'tkt-template-builder' ),
+			'optgroupend'            => '',
+			1                        => esc_html__( 'Particular Templates', 'tkt-template-builder' ),
+			'attachment_template'    => esc_html__( 'Attachments', 'tkt-template-builder' ),
+			'embed_template'         => esc_html__( 'Embeds', 'tkt-template-builder' ),
+			'frontpage_template'     => esc_html__( 'Front Page', 'tkt-template-builder' ),
+			'home_template'          => esc_html__( 'Home Page', 'tkt-template-builder' ),
+			'privacypolicy_template' => esc_html__( 'Privacy Policy Page', 'tkt-template-builder' ),
+			'404_template'           => esc_html__( '404 Page', 'tkt-template-builder' ),
 		);
 
 		/**
@@ -312,16 +310,16 @@ class Tkt_Template_Builder_Admin {
 		$templates = array_merge(
 			$templates,
 			array(
-				'optgroupend'                   => '',
-				2                               => esc_html__( 'Archive Templates', 'tkt-template-builder' ),
-				'archive_template'              => esc_html__( 'All Archives (Post, Author, Taxonomy, etc)', 'tkt-template-builder' ),
-				'post_type_archive_template'    => esc_html__( 'All Custom Post Type Archives', 'tkt-template-builder' ),
+				'optgroupend'                => '',
+				2                            => esc_html__( 'Archive Templates', 'tkt-template-builder' ),
+				'archive_template'           => esc_html__( 'All Archives (Post, Author, Taxonomy, etc)', 'tkt-template-builder' ),
+				'post_type_archive_template' => esc_html__( 'All Custom Post Type Archives', 'tkt-template-builder' ),
 			),
 			$post_type_archive_templates,
 			array(
-				'category_template'             => esc_html__( 'Category Archives', 'tkt-template-builder' ),
-				'tag_template'                  => esc_html__( 'Tag Archives', 'tkt-template-builder' ),
-				'tax_template'                  => esc_html__( 'All Custom Taxonomy Archives', 'tkt-template-builder' ),
+				'category_template' => esc_html__( 'Category Archives', 'tkt-template-builder' ),
+				'tag_template'      => esc_html__( 'Tag Archives', 'tkt-template-builder' ),
+				'tax_template'      => esc_html__( 'All Custom Taxonomy Archives', 'tkt-template-builder' ),
 			)
 		);
 
@@ -346,12 +344,12 @@ class Tkt_Template_Builder_Admin {
 		$templates = array_merge(
 			$templates,
 			array(
-				'date_template'     => esc_html__( 'All Date Archives', 'tkt-template-builder' ),
-				'year_template'     => esc_html__( 'Year Archives', 'tkt-template-builder' ),
-				'month_template'     => esc_html__( 'Month Archives', 'tkt-template-builder' ),
-				'day_template'     => esc_html__( 'Day Archives', 'tkt-template-builder' ),
-				'author_template'   => esc_html__( 'Author Archives', 'tkt-template-builder' ),
-				'search_template'   => esc_html__( 'Search Results', 'tkt-template-builder' ),
+				'date_template'   => esc_html__( 'All Date Archives', 'tkt-template-builder' ),
+				'year_template'   => esc_html__( 'Year Archives', 'tkt-template-builder' ),
+				'month_template'  => esc_html__( 'Month Archives', 'tkt-template-builder' ),
+				'day_template'    => esc_html__( 'Day Archives', 'tkt-template-builder' ),
+				'author_template' => esc_html__( 'Author Archives', 'tkt-template-builder' ),
+				'search_template' => esc_html__( 'Search Results', 'tkt-template-builder' ),
 			),
 		);
 
@@ -363,11 +361,11 @@ class Tkt_Template_Builder_Admin {
 		 * Additionally they tray to assign this to that, and then that to this.
 		 * Unfortunately we have to avoid this and that means a bit of query time.
 		 */
-		$args = array(
-			'post_status'   => array( 'publish' ),
-			'post_type'     => array( 'tkt_tmplt_bldr_templ' ),
-			'post__not_in'  => array( $post->ID ), // avoid assigning self to self.
-			'meta_query' => array(
+		$args          = array(
+			'post_status'  => array( 'publish' ),
+			'post_type'    => array( 'tkt_tmplt_bldr_templ' ),
+			'post__not_in' => array( $post->ID ), // avoid assigning self to self.
+			'meta_query'   => array(
 				'relation' => 'OR',
 				array( // avoid requiring template as header, footer or parent, if the other template already requires self.
 					'key'     => '_tkt_template_settings',
@@ -389,7 +387,7 @@ class Tkt_Template_Builder_Admin {
 		 * You could go a step further, and ob_get_clean the included content. Then echo. Same same... and yet WPCS would flag.
 		 * This is absurd.
 		 */
-		include( plugin_dir_path( __FILE__ ) . 'partials/tkt-template-builder-admin-display.php' );
+		include plugin_dir_path( __FILE__ ) . 'partials/tkt-template-builder-admin-display.php';
 
 	}
 
@@ -429,13 +427,13 @@ class Tkt_Template_Builder_Admin {
 		$post_id = absint( wp_unslash( $_POST['ID'] ) );
 
 		// Setup variables.
-		$template_assigned_to = array();
+		$template_assigned_to         = array();
 		$content_template_assigned_to = array();
-		$available_templates = array();
-		$available_content_templates = array();
-		$header = '';
-		$footer = '';
-		$parent = '';
+		$available_templates          = array();
+		$available_content_templates  = array();
+		$header                       = '';
+		$footer                       = '';
+		$parent                       = '';
 
 		if ( isset( $_POST['tkt_template_assigned_to'] ) ) {
 			$template_assigned_to = array_map( 'sanitize_key', $_POST['tkt_template_assigned_to'] );
@@ -489,11 +487,11 @@ class Tkt_Template_Builder_Admin {
 		 * - unset those options in the new options.
 		 * - save everything.
 		 */
-		$new_template_options = array();
-		$old_template_options = $this->get_template_options();
-		$new_template_options = array_merge( $old_template_options, $available_templates );
+		$new_template_options      = array();
+		$old_template_options      = $this->get_template_options();
+		$new_template_options      = array_merge( $old_template_options, $available_templates );
 		$thiz_old_template_options = array_intersect( $old_template_options, $available_templates );
-		$unset_theze_templates = array_diff_key( $thiz_old_template_options, $available_templates );
+		$unset_theze_templates     = array_diff_key( $thiz_old_template_options, $available_templates );
 
 		/**
 		 * If we remove all assignements from the template (select2) then we have no unset_theze_tempaltes
@@ -513,11 +511,11 @@ class Tkt_Template_Builder_Admin {
 			unset( $new_template_options[ $template ] );
 		}
 
-		$new_ct_options = array();
-		$old_ct_options = $this->get_ct_options();
-		$new_ct_options = array_merge( $old_ct_options, $available_content_templates );
+		$new_ct_options      = array();
+		$old_ct_options      = $this->get_ct_options();
+		$new_ct_options      = array_merge( $old_ct_options, $available_content_templates );
 		$thiz_old_ct_options = array_intersect( $old_ct_options, $available_content_templates );
-		$unset_theze_cts = array_diff_key( $thiz_old_ct_options, $available_content_templates );
+		$unset_theze_cts     = array_diff_key( $thiz_old_ct_options, $available_content_templates );
 
 		/**
 		 * If we remove all assignements from the CT (select2) then we have no unset_theze_cts
@@ -599,7 +597,7 @@ class Tkt_Template_Builder_Admin {
 	 */
 	public function register_template() {
 
-		$labels = array(
+		$labels       = array(
 			'name'                  => _x( 'Templates', 'Post Type General Name', 'tkt-template-builder' ),
 			'singular_name'         => _x( 'Template', 'Post Type Singular Name', 'tkt-template-builder' ),
 			'menu_name'             => __( 'Templates', 'tkt-template-builder' ),
@@ -622,41 +620,41 @@ class Tkt_Template_Builder_Admin {
 			'filter_items_list'     => __( 'Filter Templates list', 'tkt-template-builder' ),
 		);
 		$capabilities = array(
-			'edit_post'             => 'update_core',
-			'read_post'             => 'update_core',
-			'delete_post'           => 'update_core',
-			'edit_posts'            => 'update_core',
-			'edit_others_posts'     => 'update_core',
-			'delete_posts'          => 'update_core',
-			'publish_posts'         => 'update_core',
-			'read_private_posts'    => 'update_core',
+			'edit_post'          => 'update_core',
+			'read_post'          => 'update_core',
+			'delete_post'        => 'update_core',
+			'edit_posts'         => 'update_core',
+			'edit_others_posts'  => 'update_core',
+			'delete_posts'       => 'update_core',
+			'publish_posts'      => 'update_core',
+			'read_private_posts' => 'update_core',
 		);
-		$supports = array(
+		$supports     = array(
 			'title',
 			'editor',
 			'comments',
 			'revisions',
 		);
-		$args = array(
-			'label'                 => __( 'Template', 'tkt-template-builder' ),
-			'description'           => __( 'Templates for Single Posts, Pages or Archives', 'tkt-template-builder' ),
-			'labels'                => $labels,
-			'supports'              => $supports,
-			'hierarchical'          => false,
-			'public'                => true,
-			'show_ui'               => true,
-			'show_in_menu'          => true,
-			'menu_position'         => 60,
-			'menu_icon'             => 'dashicons-layout',
-			'show_in_admin_bar'     => true,
-			'show_in_nav_menus'     => false,
-			'can_export'            => true,
-			'has_archive'           => false,
-			'exclude_from_search'   => true,
-			'publicly_queryable'    => false,
-			'rewrite'               => false,
-			'capabilities'          => $capabilities,
-			'show_in_rest'          => false,
+		$args         = array(
+			'label'               => __( 'Template', 'tkt-template-builder' ),
+			'description'         => __( 'Templates for Single Posts, Pages or Archives', 'tkt-template-builder' ),
+			'labels'              => $labels,
+			'supports'            => $supports,
+			'hierarchical'        => false,
+			'public'              => true,
+			'show_ui'             => true,
+			'show_in_menu'        => true,
+			'menu_position'       => 60,
+			'menu_icon'           => 'dashicons-layout',
+			'show_in_admin_bar'   => true,
+			'show_in_nav_menus'   => false,
+			'can_export'          => true,
+			'has_archive'         => false,
+			'exclude_from_search' => true,
+			'publicly_queryable'  => false,
+			'rewrite'             => false,
+			'capabilities'        => $capabilities,
+			'show_in_rest'        => false,
 		);
 
 		register_post_type( 'tkt_tmplt_bldr_templ', $args );
@@ -671,14 +669,14 @@ class Tkt_Template_Builder_Admin {
 	public function add_template_admin_list_columns( $columns ) {
 
 		$columns = array(
-			'cb'                => $columns['cb'],
-			'title'             => __( 'Title', 'tkt-template-builder' ),
-			'assigned_to'       => __( 'Assigned To', 'tkt-template-builder' ),
-			'parent_template'   => __( 'Parent Template', 'tkt-template-builder' ),
-			'header'            => __( 'Header', 'tkt-template-builder' ),
-			'footer'            => __( 'Footer', 'tkt-template-builder' ),
-			'date'              => __( 'Date', 'tkt-template-builder' ),
-			'author'            => __( 'Author', 'tkt-template-builder' ),
+			'cb'              => $columns['cb'],
+			'title'           => __( 'Title', 'tkt-template-builder' ),
+			'assigned_to'     => __( 'Assigned To', 'tkt-template-builder' ),
+			'parent_template' => __( 'Parent Template', 'tkt-template-builder' ),
+			'header'          => __( 'Header', 'tkt-template-builder' ),
+			'footer'          => __( 'Footer', 'tkt-template-builder' ),
+			'date'            => __( 'Date', 'tkt-template-builder' ),
+			'author'          => __( 'Author', 'tkt-template-builder' ),
 		);
 
 		return $columns;
@@ -693,8 +691,8 @@ class Tkt_Template_Builder_Admin {
 	 */
 	public function populate_template_admin_list_columns( $column, $post_id ) {
 
-		$template_options = $this->get_template_options();
-		$template_settings = $this->get_settings( $post_id );
+		$template_options      = $this->get_template_options();
+		$template_settings     = $this->get_settings( $post_id );
 		$templates_assigned_to = array_keys( $template_options, $post_id );
 
 		if ( 'assigned_to' === $column ) {

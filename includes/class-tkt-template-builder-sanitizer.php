@@ -4,9 +4,8 @@
  *
  * @link       https://www.tukutoi.com/
  * @since      1.0.0
- *
- * @package    Tkt_Template_Builder
- * @subpackage Tkt_Template_Builder/includes
+ * @package    Plugins\TemplateBuilder\Includes
+ * @author     Beda Schmid <beda@tukutoi.com>
  */
 
 /**
@@ -16,9 +15,8 @@
  *
  * @uses Tkt_Template_Builder_Declarations()
  * @since      1.0.0
- * @package    Tkt_Template_Builder
- * @subpackage Tkt_Template_Builder/includes
- * @author     Your Name <hello@tukutoi.com>
+ * @package    Plugins\TemplateBuilder\Includes
+ * @author     Beda Schmid <beda@tukutoi.com>
  */
 class Tkt_Template_Builder_Sanitizer {
 
@@ -78,12 +76,12 @@ class Tkt_Template_Builder_Sanitizer {
 	 */
 	public function __construct( $plugin_prefix, $version, $declarations ) {
 
-		$this->plugin_prefix    = $plugin_prefix;
-		$this->version          = $version;
-		$this->declarations     = $declarations;
+		$this->plugin_prefix = $plugin_prefix;
+		$this->version       = $version;
+		$this->declarations  = $declarations;
 
-		$this->debug            = false;
-		$this->debug_log        = false;
+		$this->debug     = false;
+		$this->debug_log = false;
 
 	}
 
@@ -353,11 +351,11 @@ class Tkt_Template_Builder_Sanitizer {
 		$errors['display'] = esc_html__( 'Something wrong. Enable Debug mode and check again.', 'tkt-template-builder' );
 
 		if ( is_null( $result ) ) {
-			$errors['debug']  = 'The response was null in ' . $location;
+			$errors['debug'] = 'The response was null in ' . $location;
 		} elseif ( is_wp_error( $result ) ) {
-			$errors['debug']  = 'The response was an instance of wp_error: ' . $result->get_error_message() . ' in ' . $location;
+			$errors['debug'] = 'The response was an instance of wp_error: ' . $result->get_error_message() . ' in ' . $location;
 		} elseif ( false === $result ) {
-			$errors['debug']  = 'There was a failure in response in ' . $location;
+			$errors['debug'] = 'There was a failure in response in ' . $location;
 		} else {
 			$errors['debug'] = 'Unknown type of error occurred in' . $location;
 		}

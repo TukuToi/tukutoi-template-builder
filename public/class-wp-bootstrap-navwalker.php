@@ -2,19 +2,15 @@
 /**
  * WP Bootstrap Navwalker.
  *
- * @package WP-Bootstrap-Navwalker
+ * A custom WordPress nav walker class to implement the Bootstrap 4 navigation style in a custom theme using the WordPress built in menu manager.
  *
- * @wordpress-plugin
- * Plugin Name: WP Bootstrap Navwalker
- * Plugin URI:  https://github.com/wp-bootstrap/tkt-template-builder
- * Description: A custom WordPress nav walker class to implement the Bootstrap 4 navigation style in a custom theme using the WordPress built in menu manager.
- * Author: Edward McIntyre - @twittem, WP Bootstrap, William Patton - @pattonwebz
- * Version: 4.3.0
- * Author URI: https://github.com/wp-bootstrap
- * GitHub Plugin URI: https://github.com/wp-bootstrap/tkt-template-builder
- * GitHub Branch: master
- * License: GPL-3.0+
- * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
+ * @author WP Bootstrap
+ * @version 4.3.0
+ * @link https://github.com/wp-bootstrap
+ * @link https://github.com/wp-bootstrap/tkt-template-builder
+ * @link https://github.com/wp-bootstrap/tkt-template-builder
+ * @license: <http://www.gnu.org/licenses/gpl-3.0.txt> GPL-3.0+
+ * @package WPBootstrapNavwalker
  */
 
 /* Check if Class Exists. */
@@ -22,6 +18,15 @@ if ( ! class_exists( 'WP_Bootstrap_Navwalker' ) ) {
 	/**
 	 * WP_Bootstrap_Navwalker class.
 	 *
+	 * @author Edward McIntyre <@twittem>
+	 * @author WP Bootstrap
+	 * @author William Patton <@pattonwebz>
+	 * @version 4.3.0
+	 * @link https://github.com/wp-bootstrap
+	 * @link https://github.com/wp-bootstrap/tkt-template-builder
+	 * @link https://github.com/wp-bootstrap/tkt-template-builder
+	 * @license: <http://www.gnu.org/licenses/gpl-3.0.txt> GPL-3.0+
+	 * @package WPBootstrapNavwalker
 	 * @extends Walker_Nav_Menu
 	 */
 	class WP_Bootstrap_Navwalker extends Walker_Nav_Menu {

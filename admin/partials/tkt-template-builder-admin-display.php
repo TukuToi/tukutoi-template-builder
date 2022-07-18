@@ -6,16 +6,15 @@
  *
  * @link       https://www.tukutoi/
  * @since      1.1.0
- *
- * @package    Tkt_Template_Builder
- * @subpackage Tkt_Template_Builder/admin/partials
+ * @package    Plugins\TemplateBuilder\Admin\Partials
+ * @author     Beda Schmid <beda@tukutoi.com>
  */
 
 ?>
 
 <?php
 $disabled = '';
-$i = 0;
+$i        = 0;
 
 if ( ( isset( $template_options['global_footer'] )
 		&& $post->ID === $template_options['global_footer']

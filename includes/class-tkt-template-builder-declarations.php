@@ -8,9 +8,8 @@
  *
  * @link       https://www.tukutoi.com/
  * @since      1.0.0
- *
- * @package    Tkt_Template_Builder
- * @subpackage Tkt_Template_Builder/includes
+ * @package    Plugins\TemplateBuilder\Includes
+ * @author     Beda Schmid <beda@tukutoi.com>
  */
 
 /**
@@ -21,9 +20,8 @@
  * get it from the code (such as user object, which is a entangled mess, or get_bloginfo which is a case switcher).
  *
  * @since      1.0.0
- * @package    Tkt_Template_Builder
- * @subpackage Tkt_Template_Builder/includes
- * @author     TukuToi <hello@tukutoi.com>
+ * @package    Plugins\TemplateBuilder\Includes
+ * @author     Beda Schmid <beda@tukutoi.com>
  */
 class Tkt_Template_Builder_Declarations {
 
@@ -70,7 +68,7 @@ class Tkt_Template_Builder_Declarations {
 	 */
 	public function __construct() {
 
-		$this->shortcodes       = $this->declare_shortcodes();
+		$this->shortcodes           = $this->declare_shortcodes();
 		$this->sanitization_options = $this->sanitize_options();
 
 	}
@@ -89,27 +87,27 @@ class Tkt_Template_Builder_Declarations {
 	private function declare_shortcodes() {
 
 		$shortcodes = array(
-			'template' => array(
+			'template'   => array(
 				'label' => esc_html__( 'Template', 'tkt-template-builder' ),
 				'type'  => 'templating',
 				'inner' => false,
 			),
-			'navmenu' => array(
+			'navmenu'    => array(
 				'label' => esc_html__( 'Navigation Menu', 'tkt-template-builder' ),
 				'type'  => 'templating',
 				'inner' => false,
 			),
-			'widget' => array(
+			'widget'     => array(
 				'label' => esc_html__( 'Widget', 'tkt-template-builder' ),
 				'type'  => 'templating',
 				'inner' => false,
 			),
-			'sidebar' => array(
+			'sidebar'    => array(
 				'label' => esc_html__( 'Sidebar', 'tkt-template-builder' ),
 				'type'  => 'templating',
 				'inner' => false,
 			),
-			'do_action' => array(
+			'do_action'  => array(
 				'label' => esc_html__( 'Do Action', 'tkt-template-builder' ),
 				'type'  => 'hooks',
 				'inner' => true,
@@ -119,7 +117,7 @@ class Tkt_Template_Builder_Declarations {
 				'type'  => 'hooks',
 				'inner' => true,
 			),
-			'funktion' => array(
+			'funktion'   => array(
 				'label' => esc_html__( 'Function', 'tkt-template-builder' ),
 				'type'  => 'hooks',
 				'inner' => true,
@@ -148,8 +146,8 @@ class Tkt_Template_Builder_Declarations {
 	public function data_map( $map ) {
 
 		$shortcode_types = array(
-			'templating'    => esc_html__( 'Templating', 'tkt-template-builder' ),
-			'hooks'         => esc_html__( 'Hooks & Functions', 'tkt-template-builder' ),
+			'templating' => esc_html__( 'Templating', 'tkt-template-builder' ),
+			'hooks'      => esc_html__( 'Hooks & Functions', 'tkt-template-builder' ),
 		);
 
 		return $$map;
@@ -173,96 +171,96 @@ class Tkt_Template_Builder_Declarations {
 	private function sanitize_options() {
 
 		$sanitization_options = array(
-			'none' => array(
-				'label'     => esc_html__( 'No Sanitization', 'tkt-template-builder' ),
+			'none'              => array(
+				'label' => esc_html__( 'No Sanitization', 'tkt-template-builder' ),
 			),
-			'email' => array(
-				'label'     => esc_html__( 'Sanitize Email', 'tkt-template-builder' ),
-				'callback'  => 'sanitize_email',
+			'email'             => array(
+				'label'    => esc_html__( 'Sanitize Email', 'tkt-template-builder' ),
+				'callback' => 'sanitize_email',
 			),
-			'file_name' => array(
-				'label'     => esc_html__( 'File Name', 'tkt-template-builder' ),
-				'callback'  => 'sanitize_file_name',
+			'file_name'         => array(
+				'label'    => esc_html__( 'File Name', 'tkt-template-builder' ),
+				'callback' => 'sanitize_file_name',
 			),
-			'html_class' => array(
-				'label'     => esc_html__( 'HTML Class', 'tkt-template-builder' ),
-				'callback'  => 'sanitize_html_class',
+			'html_class'        => array(
+				'label'    => esc_html__( 'HTML Class', 'tkt-template-builder' ),
+				'callback' => 'sanitize_html_class',
 			),
-			'key' => array(
-				'label'     => esc_html__( 'Key', 'tkt-template-builder' ),
-				'callback'  => 'sanitize_key',
+			'key'               => array(
+				'label'    => esc_html__( 'Key', 'tkt-template-builder' ),
+				'callback' => 'sanitize_key',
 			),
-			'meta' => array(
-				'label'     => esc_html__( 'Meta', 'tkt-template-builder' ),
-				'callback'  => 'sanitize_meta',
+			'meta'              => array(
+				'label'    => esc_html__( 'Meta', 'tkt-template-builder' ),
+				'callback' => 'sanitize_meta',
 			),
-			'mime_type' => array(
-				'label'     => esc_html__( 'Mime Type', 'tkt-template-builder' ),
-				'callback'  => 'sanitize_mime_type',
+			'mime_type'         => array(
+				'label'    => esc_html__( 'Mime Type', 'tkt-template-builder' ),
+				'callback' => 'sanitize_mime_type',
 			),
-			'option' => array(
-				'label'     => esc_html__( 'Option', 'tkt-template-builder' ),
-				'callback'  => 'sanitize_option',
+			'option'            => array(
+				'label'    => esc_html__( 'Option', 'tkt-template-builder' ),
+				'callback' => 'sanitize_option',
 			),
-			'sql_orderby' => array(
-				'label'     => esc_html__( 'SQL Orderby', 'tkt-template-builder' ),
-				'callback'  => 'sanitize_sql_orderby',
+			'sql_orderby'       => array(
+				'label'    => esc_html__( 'SQL Orderby', 'tkt-template-builder' ),
+				'callback' => 'sanitize_sql_orderby',
 			),
-			'text_field' => array(
-				'label'     => esc_html__( 'Text Field', 'tkt-template-builder' ),
-				'callback'  => 'sanitize_text_field',
+			'text_field'        => array(
+				'label'    => esc_html__( 'Text Field', 'tkt-template-builder' ),
+				'callback' => 'sanitize_text_field',
 			),
-			'textarea_field' => array(
-				'label'     => esc_html__( 'Text Area', 'tkt-template-builder' ),
-				'callback'  => 'sanitize_textarea_field',
+			'textarea_field'    => array(
+				'label'    => esc_html__( 'Text Area', 'tkt-template-builder' ),
+				'callback' => 'sanitize_textarea_field',
 			),
-			'title' => array(
-				'label'     => esc_html__( 'Title', 'tkt-template-builder' ),
-				'callback'  => 'sanitize_title',
+			'title'             => array(
+				'label'    => esc_html__( 'Title', 'tkt-template-builder' ),
+				'callback' => 'sanitize_title',
 			),
-			'title_for_query' => array(
-				'label'     => esc_html__( 'Title for Query', 'tkt-template-builder' ),
-				'callback'  => 'sanitize_title_for_query',
+			'title_for_query'   => array(
+				'label'    => esc_html__( 'Title for Query', 'tkt-template-builder' ),
+				'callback' => 'sanitize_title_for_query',
 			),
 			'title_with_dashes' => array(
-				'label'     => esc_html__( 'Title with Dashes', 'tkt-template-builder' ),
-				'callback'  => 'sanitize_title_with_dashes',
+				'label'    => esc_html__( 'Title with Dashes', 'tkt-template-builder' ),
+				'callback' => 'sanitize_title_with_dashes',
 			),
-			'user' => array(
-				'label'     => esc_html__( 'User', 'tkt-template-builder' ),
-				'callback'  => 'sanitize_user',
+			'user'              => array(
+				'label'    => esc_html__( 'User', 'tkt-template-builder' ),
+				'callback' => 'sanitize_user',
 			),
-			'url_raw' => array(
-				'label'     => esc_html__( 'URL Raw', 'tkt-template-builder' ),
-				'callback'  => 'esc_url_raw',
+			'url_raw'           => array(
+				'label'    => esc_html__( 'URL Raw', 'tkt-template-builder' ),
+				'callback' => 'esc_url_raw',
 			),
-			'post_kses' => array(
-				'label'     => esc_html__( 'Post KSES', 'tkt-template-builder' ),
-				'callback'  => 'wp_filter_post_kses',
+			'post_kses'         => array(
+				'label'    => esc_html__( 'Post KSES', 'tkt-template-builder' ),
+				'callback' => 'wp_filter_post_kses',
 			),
-			'nohtml_kses' => array(
-				'label'     => esc_html__( 'NoHTML KSES', 'tkt-template-builder' ),
-				'callback'  => 'wp_filter_nohtml_kses',
+			'nohtml_kses'       => array(
+				'label'    => esc_html__( 'NoHTML KSES', 'tkt-template-builder' ),
+				'callback' => 'wp_filter_nohtml_kses',
 			),
-			'absint' => array(
-				'label'     => esc_html__( 'Integer', 'tkt-template-builder' ),
-				'callback'  => 'absint',
+			'absint'            => array(
+				'label'    => esc_html__( 'Integer', 'tkt-template-builder' ),
+				'callback' => 'absint',
 			),
-			'intval' => array(
-				'label'     => esc_html__( 'Integer', 'tkt-template-builder' ),
-				'callback'  => 'intval',
+			'intval'            => array(
+				'label'    => esc_html__( 'Integer', 'tkt-template-builder' ),
+				'callback' => 'intval',
 			),
-			'floatval' => array(
-				'label'     => esc_html__( 'Float', 'tkt-template-builder' ),
-				'callback'  => 'floatval',
+			'floatval'          => array(
+				'label'    => esc_html__( 'Float', 'tkt-template-builder' ),
+				'callback' => 'floatval',
 			),
-			'is_bool' => array(
-				'label'     => esc_html__( 'Is Boolean', 'tkt-template-builder' ),
-				'callback'  => 'is_bool',
+			'is_bool'           => array(
+				'label'    => esc_html__( 'Is Boolean', 'tkt-template-builder' ),
+				'callback' => 'is_bool',
 			),
-			'boolval' => array(
-				'label'     => esc_html__( 'Boolean Value', 'tkt-template-builder' ),
-				'callback'  => 'boolval',
+			'boolval'           => array(
+				'label'    => esc_html__( 'Boolean Value', 'tkt-template-builder' ),
+				'callback' => 'boolval',
 			),
 		);
 

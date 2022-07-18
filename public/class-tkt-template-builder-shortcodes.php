@@ -5,16 +5,15 @@
  * @link       https://www.tukutoi.com/
  * @since      1.3.0
  *
- * @package    Tkt_Template_Builder
- * @subpackage Tkt_Template_Builder/public
+ * @package    Plugins\ShortCodes\TemplateBuilder
+ * @author     TukuToi <hello@tukutoi.com>
  */
 
 /**
- * Defines all ShortCodes.
+ * Defines all ShortCodes of the TukuToi Template Builder Plugin.
  *
- * @package    Tkt_Template_Builder
- * @subpackage Tkt_Template_Builder/public
- * @author     Your Name <hello@tukutoi.com>
+ * @package    ShortCodes
+ * @author     TukuToi <hello@tukutoi.com>
  */
 class Tkt_Template_Builder_Shortcodes {
 
@@ -57,12 +56,12 @@ class Tkt_Template_Builder_Shortcodes {
 	 */
 	public function __construct( $plugin_prefix, $version, $declarations, $sanitizer, $plugin_public ) {
 
-		$this->plugin_prefix    = $plugin_prefix;
-		$this->version          = $version;
-		$this->declarations     = $declarations;
+		$this->plugin_prefix = $plugin_prefix;
+		$this->version       = $version;
+		$this->declarations  = $declarations;
 
-		$this->sanitizer        = $sanitizer;
-		$this->plugin_public    = $plugin_public;
+		$this->sanitizer     = $sanitizer;
+		$this->plugin_public = $plugin_public;
 
 	}
 
@@ -153,18 +152,18 @@ class Tkt_Template_Builder_Shortcodes {
 		foreach ( $atts as $key => $value ) {
 			if ( 'args' === $key ) {
 				$value = $this->sanitizer->sanitize( 'text_field', $value );
-				$args = array();
+				$args  = array();
 				if ( ! empty( $value ) ) {
 					// If several args are passed.
 					if ( strpos( $value, ',' ) !== false ) {
 						$args_pre = explode( ',', $value );
 						foreach ( $args_pre as $key => $arrval ) {
 							list( $k, $v ) = explode( ':', $arrval );
-							$args[ $k ] = is_numeric( $v ) ? (int) $v : '\'' . $v . '\'';
+							$args[ $k ]    = is_numeric( $v ) ? (int) $v : '\'' . $v . '\'';
 						}
 					} else {
 						list( $k, $v ) = explode( ':', $value );
-						$args[ $k ] = is_numeric( $v ) ? (int) $v : '\'' . $v . '\'';
+						$args[ $k ]    = is_numeric( $v ) ? (int) $v : '\'' . $v . '\'';
 					}
 				}
 			} else {
@@ -260,18 +259,18 @@ class Tkt_Template_Builder_Shortcodes {
 		foreach ( $atts as $key => $value ) {
 			if ( 'args' === $key ) {
 				$value = $this->sanitizer->sanitize( 'text_field', $value );
-				$args = array();
+				$args  = array();
 				if ( ! empty( $value ) ) {
 					// If several args are passed.
 					if ( strpos( $value, ',' ) !== false ) {
 						$args_pre = explode( ',', $value );
 						foreach ( $args_pre as $key => $arrval ) {
 							list( $k, $v ) = explode( ':', $arrval );
-							$args[ $k ] = is_numeric( $v ) ? (int) $v : $v;
+							$args[ $k ]    = is_numeric( $v ) ? (int) $v : $v;
 						}
 					} else {
 						list( $k, $v ) = explode( ':', $value );
-						$args[ $k ] = is_numeric( $v ) ? (int) $v : $v;
+						$args[ $k ]    = is_numeric( $v ) ? (int) $v : $v;
 					}
 				}
 			} else {
@@ -515,7 +514,7 @@ class Tkt_Template_Builder_Shortcodes {
 			case 'WP_Widget_Archives':
 				$instance = wp_parse_args(
 					array(
-						'count' => $atts['count'],
+						'count'    => $atts['count'],
 						'dropdown' => $atts['dropdown'],
 					),
 					$instance
@@ -524,9 +523,9 @@ class Tkt_Template_Builder_Shortcodes {
 			case 'WP_Widget_Categories':
 				$instance = wp_parse_args(
 					array(
-						'count' => $atts['count'],
+						'count'        => $atts['count'],
 						'hierarchical' => $atts['hierarchical'],
-						'dropdown' => $atts['dropdown'],
+						'dropdown'     => $atts['dropdown'],
 					),
 					$instance
 				);
@@ -542,11 +541,11 @@ class Tkt_Template_Builder_Shortcodes {
 			case 'WP_Widget_Links':
 				$instance = wp_parse_args(
 					array(
-						'category' => $atts['category'],
+						'category'    => $atts['category'],
 						'description' => $atts['description'],
-						'rating' => $atts['rating'],
-						'images' => $atts['images'],
-						'name' => $atts['name'],
+						'rating'      => $atts['rating'],
+						'images'      => $atts['images'],
+						'name'        => $atts['name'],
 					),
 					$instance
 				);
@@ -554,7 +553,7 @@ class Tkt_Template_Builder_Shortcodes {
 			case 'WP_Widget_Pages':
 				$instance = wp_parse_args(
 					array(
-						'sortby' => $atts['sortby'],
+						'sortby'  => $atts['sortby'],
 						'exclude' => $atts['exclude'],
 					),
 					$instance
@@ -572,7 +571,7 @@ class Tkt_Template_Builder_Shortcodes {
 			case 'WP_Widget_RSS':
 				$instance = wp_parse_args(
 					array(
-						'url' => $atts['url'],
+						'url'   => $atts['url'],
 						'items' => $atts['items'],
 
 					),
@@ -640,8 +639,8 @@ class Tkt_Template_Builder_Shortcodes {
 
 		$atts = shortcode_atts(
 			array(
-				'sidebar'   => '',
-				'error'     => 'Sidebar was not found',
+				'sidebar' => '',
+				'error'   => 'Sidebar was not found',
 			),
 			$atts,
 			$tag
@@ -654,7 +653,7 @@ class Tkt_Template_Builder_Shortcodes {
 
 		ob_start();
 		$sidebar = dynamic_sidebar( $atts['sidebar'] );
-		$out = ob_get_clean();
+		$out     = ob_get_clean();
 
 		if ( true === $sidebar ) {
 			return $out;

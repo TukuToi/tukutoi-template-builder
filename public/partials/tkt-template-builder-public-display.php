@@ -6,9 +6,8 @@
  *
  * @link       https://www.tukutoi/
  * @since      0.0.1
- *
- * @package    Tkt_Template_Builder
- * @subpackage Tkt_Template_Builder/public/partials
+ * @package    Plugins\TemplateBuilder\Public\Partials
+ * @author     Beda Schmid <beda@tukutoi.com>
  */
 
 /**
@@ -53,15 +52,15 @@
 /**
  * Get Requested Template Options, ID and Settings.
  */
-$tkt_options        = array_map( 'sanitize_key', get_option( 'tkt_available_templates', array() ) );
-$template_id        = absint( apply_filters( 'tkt_template_id', 0 ) );
-$template_settings  = array_map( 'sanitize_key', apply_filters( 'tkt_template_settings', array() ) );
+$tkt_options       = array_map( 'sanitize_key', get_option( 'tkt_available_templates', array() ) );
+$template_id       = absint( apply_filters( 'tkt_template_id', 0 ) );
+$template_settings = array_map( 'sanitize_key', apply_filters( 'tkt_template_settings', array() ) );
 
 /**
  * Check if a Global Header/Footer is available
  */
-$global_header      = isset( $tkt_options['global_header'] ) && is_numeric( $tkt_options['global_header'] ) ? absint( $tkt_options['global_header'] ) : null;
-$global_footer      = isset( $tkt_options['global_footer'] ) && is_numeric( $tkt_options['global_footer'] ) ? absint( $tkt_options['global_footer'] ) : null;
+$global_header = isset( $tkt_options['global_header'] ) && is_numeric( $tkt_options['global_header'] ) ? absint( $tkt_options['global_header'] ) : null;
+$global_footer = isset( $tkt_options['global_footer'] ) && is_numeric( $tkt_options['global_footer'] ) ? absint( $tkt_options['global_footer'] ) : null;
 
 /**
  * Get our main template parts content
